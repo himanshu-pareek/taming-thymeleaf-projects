@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Thyme Wizards</title>
+    <link rel="stylesheet" th:href="@{/css/application.css}">
+</head>
+<body>
+<h1 th:text="${pageTitle}" class="text-4xl mx-4 mb-4 border-b-4 border-taming-thymeleaf-green">Taming Thymeleaf</h1>
+<div class="mx-6">
+    <ul class="list-disc mx-6 text-base">
+        <li th:each="scientist: ${scientists}">
+            <span th:text="${scientist}"></span>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
