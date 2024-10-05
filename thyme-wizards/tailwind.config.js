@@ -9,11 +9,13 @@ module.exports = {
         'taming-thymeleaf-green': 'darkseagreen'
       },
       fontFamily: {
-        sans: ['Inter var', ...defaultTheme.theme.fontFamily.sans],
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       }
     },
     plugins: [],
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms')
+  ],
 }
 
