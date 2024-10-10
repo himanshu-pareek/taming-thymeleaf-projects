@@ -71,8 +71,21 @@
             </div>
             <div class="mt-5 h-0 flex-1 overflow-y-auto">
                 <nav class="space-y-1 px-2">
-                    <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='#', title='Dashboard', menuItem='dashboard',icon='dashboard')}"></a>
-                    <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='#', title='Team', menuItem='team', icon='team')}"></a>
+                    <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='/', title='Dashboard', menuItem='dashboard',icon='dashboard')}"></a>
+
+                    <a th:replace="~{ fragments/sidebar-buttons :: mobile-button(
+                        link='/users',
+                        title='Users',
+                        menuItem='users',
+                        icon='users'
+                    ) }"></a>
+
+                    <a th:replace="~{ fragments/sidebar-buttons :: mobile-button(
+                        link='/teams',
+                        title='Teams',
+                        menuItem='teams',
+                        icon='user-group'
+                    ) }"></a>
                     <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='#', title='Projects', menuItem='projects',icon='projects')}"></a>
                     <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='#', title='Calendar', menuItem='calendar',icon='calendar')}"></a>
                     <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='#', title='Documents', menuItem='documents',icon='documents')}"></a>
@@ -99,16 +112,24 @@
             <nav class="flex-1 space-y-1 px-2 pb-4">
 
                 <a th:replace="~{ fragments/sidebar-buttons :: desktop-button(
-                    link='#',
+                    link='/',
                     title='Dashboard',
                     menuItem='dashboard',
                     icon='dashboard')}"></a>
 
                 <a th:replace="~{ fragments/sidebar-buttons :: desktop-button(
-                    link='/team',
-                    title='Team',
-                    menuItem='team',
-                    icon='team')}"></a>
+                    link='/users',
+                    title='Users',
+                    menuItem='users',
+                    icon='users'
+                ) }"></a>
+
+                <a th:replace="~{ fragments/sidebar-buttons :: desktop-button(
+                    link='/teams',
+                    title='Teams',
+                    menuItem='teams',
+                    icon='user-group'
+                ) }"></a>
 
                 <a th:replace="~{ fragments/sidebar-buttons :: desktop-button(
                     link='/projects',
