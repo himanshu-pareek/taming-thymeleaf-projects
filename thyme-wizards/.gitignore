@@ -38,3 +38,6 @@ node
 
 # Environment file(s)
 .env
+
+# Local applicaton properties file
+src/main/resources/application-local.properties

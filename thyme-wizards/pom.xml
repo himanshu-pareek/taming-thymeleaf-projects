@@ -30,7 +30,9 @@
 	    <!-- Maven plugins -->
         <frontend-maven-plugin.version>1.15.0</frontend-maven-plugin.version>
         <frontend-maven-plugin.nodeVersion>v20.16.0</frontend-maven-plugin.nodeVersion>
-        <frontend-maven-plugin.npmVersion>10.8.1</frontend-maven-plugin.npmVersion></properties>
+        <frontend-maven-plugin.npmVersion>10.8.1</frontend-maven-plugin.npmVersion>
+        <java-faker.version>1.0.2</java-faker.version>
+    </properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -75,6 +77,11 @@
             <groupId>org.testcontainers</groupId>
             <artifactId>postgresql</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>${java-faker.version}</version>
         </dependency>
 
         <dependency>
