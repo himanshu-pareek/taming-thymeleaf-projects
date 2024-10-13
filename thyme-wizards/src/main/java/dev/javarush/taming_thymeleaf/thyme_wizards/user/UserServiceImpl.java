@@ -1,5 +1,6 @@
 package dev.javarush.taming_thymeleaf.thyme_wizards.user;
 
+import com.google.common.collect.ImmutableSet;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,5 +26,10 @@ public class UserServiceImpl implements UserService {
                 parameters.getPhoneNumber()
         );
         return this.userRepository.save(user);
+    }
+
+    @Override
+    public ImmutableSet<User> getAllUsers() {
+        return ImmutableSet.copyOf(userRepository.findAll());
     }
 }
