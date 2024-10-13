@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -43,12 +44,24 @@ class UserRepositoryTest {
     void testSaveUser() {
         UserId id = userRepository.nextId();
         System.out.println("User id (generated) --> " + id);
-        userRepository.save(new User(id));
+        userRepository.save(new User(
+                id,
+                new Username("Himanshu", "Pareek"),
+                Gender.MALE,
+                LocalDate.of(1997, 1, 1),
+                new Email("him@fakeemail.com"),
+                new PhoneNumber("9876543210")
+        ));
 
         entityManager.flush();
 
-        UUID idInDB = jdbcTemplate.queryForObject("SELECT id FROM users", UUID.class);
-        assertEquals(id.id(), idInDB);
+        assertEquals(id.id(), jdbcTemplate.queryForObject("SELECT id FROM users", UUID.class));
+        assertEquals("Himanshu", jdbcTemplate.queryForObject("SELECT first_name FROM users", String.class));
+        assertEquals("Pareek", jdbcTemplate.queryForObject("SELECT last_name FROM users", String.class));
+        assertEquals(Gender.MALE, jdbcTemplate.queryForObject("SELECT gender FROM users", Gender.class));
+        assertEquals(LocalDate.of(1997, 1, 1), jdbcTemplate.queryForObject("SELECT birthday FROM users", LocalDate.class));
+        assertEquals("him@fakeemail.com", jdbcTemplate.queryForObject("SELECT email FROM users", String.class));
+        assertEquals("9876543210", jdbcTemplate.queryForObject("SELECT phone_number FROM users", String.class));
     }
 
     @TestConfiguration
