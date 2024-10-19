@@ -1,9 +1,10 @@
 package dev.javarush.taming_thymeleaf.thyme_wizards.user;
 
-import com.google.common.collect.ImmutableSet;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface UserService {
     User createUser(CreateUserParameters parameters);
 
-    ImmutableSet<User> getAllUsers();
+    Page<User> getAllUsers(Pageable pageable);
 }

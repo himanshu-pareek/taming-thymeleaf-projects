@@ -62,4 +62,16 @@ public class User {
     public PhoneNumber getPhoneNumber() {
         return phoneNumber;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+            "id=" + id +
+            ", username=" + username +
+            ", gender=" + gender +
+            ", birthday=" + birthday +
+            ", email=" + email +
+            ", phoneNumber=" + phoneNumber +
+            '}';
+    }
 }
