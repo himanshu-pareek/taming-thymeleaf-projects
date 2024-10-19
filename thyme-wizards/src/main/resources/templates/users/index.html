@@ -28,25 +28,22 @@
                             </thead>
                             <tbody>
                                 <tr class="bg-white" th:each="user : ${users}">
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900"
-                                        th:text="${user.username.fullName}"> ②
-                                        Bernard Lane
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500"
-                                        th:text="${user.gender}"> ③
-                                        MALE
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500"
-                                        th:text="${user.birthday}"> ④
-                                        2000-01-15
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500"
-                                        th:text="${user.email.asString()}"> ⑤
-                                        bernard.lane@gmail.com
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
-                                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                    </td>
+                                    <td th:replace="~{ fragments/table :: data(
+                                        content = ${user.username.fullName}, primary = true
+                                    ) }"></td>
+                                    <td th:replace="~{ fragments/table :: data(
+                                        content = ${user.gender}
+                                    ) }"></td>
+                                    <td th:replace="~{ fragments/table :: data(
+                                        content = ${user.birthday}, primary = false
+                                    ) }"></td>
+                                    <td th:replace="~{ fragments/table :: data(
+                                        content = ${user.email.asString()}
+                                    ) }"></td>
+                                    <td th:replace="~{ fragments/table :: dataWithLink(
+                                        linkText = 'Edit',
+                                        linkUrl = ${user.id.id()} + '/edit'
+                                    ) }"></td>
                                 </tr>
                             </tbody>
                         </table>
