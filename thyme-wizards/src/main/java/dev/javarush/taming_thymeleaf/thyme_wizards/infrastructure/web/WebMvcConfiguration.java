@@ -32,7 +32,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 
     @Bean
     @RequestScope
-    public ServletUriComponentsBuilder uriBuilder() {
+    public ServletUriComponentsBuilder urlBuilder() {
         return ServletUriComponentsBuilder.fromCurrentRequest();
     }
 }

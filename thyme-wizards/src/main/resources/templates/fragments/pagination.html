@@ -4,15 +4,101 @@
 <div th:fragment="controls"
      class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 xm:px-6">
 
-<!--    For mobile-->
+    <!--    For mobile-->
     <div class="flex-1 flex justify-between sm:hidden">
         <a id="pagination-mobile-previous"
-            th:href="${page.isFirst() ? 'javascript:void(0)' : ${@urlBuilder.replaceQueryParam('page', page.number - 1).toUriString()}}"
-            class="relative inline-flex items-center px-4 py-2 border text-sm ">
+            th:href="${page.isFirst() ? 'javascript:void(0)' : @urlBuilder.replaceQueryParam('page', page.number - 1).toUriString()}"
+            class="relative inline-flex items-center px-4 py-2 border text-sm leading-5 font-medium rounded-md"
+            th:classappend="${page.isFirst()
+                ? 'pointer-events-none text-gray-200 border-gray-200'
+                : 'border-gray-300 text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150'
+            }"
+            th:disabled="${page.isFirst()}"
+            th:text="#{pagination.previous}"
+        >
             Previous
+        </a>
+        <a id="pagination-mobile-next"
+           th:href="${page.isLast() ? 'javascript:void(0)' : @urlBuilder.replaceQueryParam('page', page.number + 1).toUriString()}"
+           class="ml-3 relative inline-flex items-center px-4 py-2 border text-sm leading-5 font-medium rounded-md"
+           th:classappend="${page.isLast()
+                ? 'pointer-events-none text-gray-200 border-gray-200'
+                : 'border-gray-300 text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150'
+            }"
+           th:disabled="${page.isLast()}"
+           th:text="#{pagination.next}"
+        >
+            Next
         </a>
     </div>
 
+    <!-- For desktop / tablet -->
+    <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+        <!-- Pagination Summary -->
+        <div>
+            <p id="pagination-summary"
+               class="text-sm leading-5 text-gray-700"
+               th:with="
+                    firstRowNum=${(page.getNumber() * page.getSize()) + 1},
+                    lastRowNum=${(page.getNumber() * page.getSize()) + page.getNumberOfElements()},
+                    totalElements=${page.getTotalElements()}
+               "
+               th:utext="#{pagination.summary(${firstRowNum}, ${lastRowNum}, ${totalElements})}"
+            ></p>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div>
+            <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+                <!-- Previous page button -->
+                <a id="pagination-previous"
+                   th:href="${page.isFirst() ? 'javascript:void(0)' : @urlBuilder.replaceQueryParam('page', page.number - 1).toUriString()}"
+                   class="relative inline-flex items-center px-2 py-2 rounded-l-md border bg-white text-sm leading-5 font-medium"
+                   th:classappend="${page.isFirst()
+                        ? 'pointer-events-none text-gray-200 border-gray-200'
+                        : 'border-gray-300 text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150'
+                   }"
+                   th:aria-label="#{pagination.previous}"
+                   th:disabled="${page.isFirst()}"
+                >
+                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                        <path fill-rule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+
+                <!-- Page numbers -->
+                <th:block
+                    th:with="
+                        startPage=${T(java.lang.Math).max(0, page.getNumber() - 2)},
+                        endPage=${T(java.lang.Math).min(page.getTotalPages() - 1, startPage + 4)}
+                    "
+                >
+                    <a th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}"
+                       th:id="${'pagination-page-' + pageNumber}"
+                       th:href="${ @urlBuilder.replaceQueryParam('page', pageNumber).toUriString() }"
+                       class="relative inline-flex items-center px-4 py-2 text-sm text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+                       th:classappend="${page.number == pageNumber ? 'font-bold' : ''}"
+                    ><span th:text="${pageNumber + 1}"></span></a>
+                </th:block>
+
+                <!-- Next page button -->
+                <a id="pagination-next"
+                   th:href="${page.isLast() ? 'javascript:void(0)' : @urlBuilder.replaceQueryParam('page', page.number + 1).toUriString()}"
+                   class="relative inline-flex items-center px-2 py-2 rounded-r-md border bg-white text-sm leading-5 font-medium"
+                   th:classappend="${page.isLast()
+                        ? 'pointer-events-none text-gray-200 border-gray-200'
+                        : 'border-gray-300 text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150'
+                   }"
+                   th:aria-label="#{pagination.next}"
+                   th:disabled="${page.isLast()}"
+                >
+                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                        <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+            </nav>
+        </div>
+    </div>
 </div>
 
 </html>
