@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="controls"
+     class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 xm:px-6">
+
+<!--    For mobile-->
+    <div class="flex-1 flex justify-between sm:hidden">
+        <a id="pagination-mobile-previous"
+            th:href="${page.isFirst() ? 'javascript:void(0)' : ${@urlBuilder.replaceQueryParam('page', page.number - 1).toUriString()}}"
+            class="relative inline-flex items-center px-4 py-2 border text-sm ">
+            Previous
+        </a>
+    </div>
+
+</div>
+
+</html>
