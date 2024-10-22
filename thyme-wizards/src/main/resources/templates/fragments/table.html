@@ -1,13 +1,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <th th:fragment="header(title)"
+        th:with="hideOnMobile=${hideOnMobile ?: false}"
         class="px-6 py-3 border-b bordergray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray500 uppercase tracking-wider"
+        th:classappend="${hideOnMobile ? 'hidden sm:table-cell' : ''}"
         th:text="${title}">
         Header Title
     </th>
     <td th:fragment="data(content)"
-        th:with="primary=${primary ?: false}"
+        th:with="primary=${primary ?: false}, hideOnMobile=${hideOnMobile ?: false}"
         class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500"
-        th:classappend="${primary ? 'font-medium text-gray-900': ''}"
+        th:classappend="|${primary ? 'font-medium text-gray-900': ''} ${hideOnMobile ? 'hidden sm:table-cell' : ''}|"
         th:text="${content}">
         Table data contents
     </td>

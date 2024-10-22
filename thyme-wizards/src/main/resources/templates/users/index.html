@@ -19,11 +19,11 @@
                         <table class="min-w-full">
                             <thead>
                                 <tr>
-                                    <th th:replace="~{ fragments/table :: header(#{user.name}) }"></th>
-                                    <th th:replace="~{ fragments/table :: header(#{user.gender}) }"></th>
-                                    <th th:replace="~{ fragments/table :: header(#{user.birthday}) }"></th>
-                                    <th th:replace="~{ fragments/table :: header(#{user.email}) }"></th>
-                                    <th class="px-6 py-3 border-b bordergray-200 bg-gray-50"></th>
+                                    <th th:replace="~{ fragments/table :: header(title = #{user.name}) }"></th>
+                                    <th th:replace="~{ fragments/table :: header(title = #{user.gender}, hideOnMobile = true) }"></th>
+                                    <th th:replace="~{ fragments/table :: header(title = #{user.birthday}, hideOnMobile = true) }"></th>
+                                    <th th:replace="~{ fragments/table :: header(title = #{user.email}, hideOnMobile = true) }"></th>
+                                    <th th:replace="~{ fragments/table :: header(title = #{table.actions}, hideOnMobile = false) }"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -32,13 +32,16 @@
                                         content = ${user.username.fullName}, primary = true
                                     ) }"></td>
                                     <td th:replace="~{ fragments/table :: data(
-                                        content = ${user.gender}
+                                        content = ${user.gender},
+                                        hideOnMobile = true
                                     ) }"></td>
                                     <td th:replace="~{ fragments/table :: data(
-                                        content = ${user.birthday}, primary = false
+                                        content = ${user.birthday}, primary = false,
+                                        hideOnMobile = true
                                     ) }"></td>
                                     <td th:replace="~{ fragments/table :: data(
-                                        content = ${user.email.asString()}
+                                        content = ${user.email.asString()},
+                                        hideOnMobile = true
                                     ) }"></td>
                                     <td th:replace="~{ fragments/table :: dataWithLink(
                                         linkText = #{action.edit},
