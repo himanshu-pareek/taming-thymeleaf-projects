@@ -20,11 +20,11 @@ public class UserServiceImpl implements UserService {
         UserId userId = this.userRepository.nextId();
         User user = new User(
                 userId,
-                parameters.getUsername(),
-                parameters.getGender(),
-                parameters.getBirthday(),
-                parameters.getEmail(),
-                parameters.getPhoneNumber()
+                parameters.username(),
+                parameters.gender(),
+                parameters.birthday(),
+                parameters.email(),
+                parameters.phoneNumber()
         );
         return this.userRepository.save(user);
     }
