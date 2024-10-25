@@ -8,24 +8,29 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class CreateUserFormData {
   @NotBlank
+  @Size(min = 3, max = 50)
   private String firstName;
   @NotBlank
+  @Size(min = 3, max = 50)
   private String lastName;
   @NotNull
   private Gender gender;
   @NotBlank
   @Email
+  @Size(min = 3, max = 100)
   private String email;
   @NotNull
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate birthday;
   @NotBlank
   @Pattern(regexp = "[0-9.\\-() x/+]+")
+  @Size(min = 8, max = 15)
   private String phoneNumber;
 
   public @NotBlank String getFirstName() {
