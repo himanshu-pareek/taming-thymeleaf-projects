@@ -1,5 +1,6 @@
 package dev.javarush.taming_thymeleaf.thyme_wizards.user.web;
 
+import dev.javarush.taming_thymeleaf.thyme_wizards.infrastructure.validation.ValidationGroupSequence;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.Gender;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.User;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.UserService;
@@ -12,6 +13,7 @@ import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,7 +52,7 @@ public class UserController {
 
     @PostMapping("create")
     public String createUser(
-        @Valid @ModelAttribute("user") CreateUserFormData createUserFormData,
+        @Validated(ValidationGroupSequence.class) @ModelAttribute("user") CreateUserFormData createUserFormData,
         BindingResult bindingResult,
         Model model
     ) {

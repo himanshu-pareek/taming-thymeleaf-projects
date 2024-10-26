@@ -1,5 +1,7 @@
 package dev.javarush.taming_thymeleaf.thyme_wizards.user.web;
 
+import dev.javarush.taming_thymeleaf.thyme_wizards.infrastructure.validation.ValidationGroupOne;
+import dev.javarush.taming_thymeleaf.thyme_wizards.infrastructure.validation.ValidationGroupTwo;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.CreateUserParameters;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.Gender;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.PhoneNumber;
@@ -12,75 +14,71 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@NonExistingUser
+@NonExistingUser(groups = ValidationGroupTwo.class)
 public class CreateUserFormData {
   @NotBlank
-  @Size(min = 3, max = 50)
+  @Size(min = 3, max = 50, groups = ValidationGroupOne.class)
   private String firstName;
   @NotBlank
-  @Size(min = 3, max = 50)
+  @Size(min = 3, max = 50, groups = ValidationGroupOne.class)
   private String lastName;
   @NotNull
   private Gender gender;
   @NotBlank
-  @Email
-  @Size(min = 3, max = 100)
+  @Email(groups = ValidationGroupOne.class)
   private String email;
   @NotNull
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate birthday;
   @NotBlank
-  @Pattern(regexp = "[0-9.\\-() x/+]+")
-  @Size(min = 8, max = 15)
+  @Pattern(regexp = "[0-9.\\-() x/+]+", groups = ValidationGroupOne.class)
   private String phoneNumber;
 
-  public @NotBlank String getFirstName() {
+  public String getFirstName() {
     return firstName;
   }
 
-  public void setFirstName(@NotBlank String firstName) {
+  public void setFirstName(String firstName) {
     this.firstName = firstName;
   }
 
-  public @NotBlank String getLastName() {
+  public String getLastName() {
     return lastName;
   }
 
-  public void setLastName(@NotBlank String lastName) {
+  public void setLastName(String lastName) {
     this.lastName = lastName;
   }
 
-  public @NotNull Gender getGender() {
+  public Gender getGender() {
     return gender;
   }
 
-  public void setGender(
-      @NotNull Gender gender) {
+  public void setGender(Gender gender) {
     this.gender = gender;
   }
 
-  public @NotBlank String getEmail() {
+  public String getEmail() {
     return email;
   }
 
-  public void setEmail(@NotBlank String email) {
+  public void setEmail(String email) {
     this.email = email;
   }
 
-  public @NotNull LocalDate getBirthday() {
+  public LocalDate getBirthday() {
     return birthday;
   }
 
-  public void setBirthday(@NotNull LocalDate birthday) {
+  public void setBirthday(LocalDate birthday) {
     this.birthday = birthday;
   }
 
-  public @NotBlank @Pattern(regexp = "[0-9.\\-() x/+]+") String getPhoneNumber() {
+  public String getPhoneNumber() {
     return phoneNumber;
   }
 
-  public void setPhoneNumber(
-      @NotBlank @Pattern(regexp = "[0-9.\\-() x/+]+") String phoneNumber) {
+  public void setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
   }
 

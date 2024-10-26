@@ -22,9 +22,7 @@ public class NonExistingUserValidator
 
   @Override
   public boolean isValid(CreateUserFormData formData, ConstraintValidatorContext context) {
-    if (
-        !StringUtils.isEmpty(formData.getEmail())
-            && userService.userWithEmailExists(new Email(formData.getEmail()))) {
+    if (userService.userWithEmailExists(new Email(formData.getEmail()))) {
       context.disableDefaultConstraintViolation();
       context.buildConstraintViolationWithTemplate("{UserAlreadyExisting}")
           .addPropertyNode("email")
