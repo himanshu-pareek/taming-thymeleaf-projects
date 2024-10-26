@@ -22,6 +22,7 @@
                     method="post">
 
                     <div>
+                        <div th:replace="~{ fragments/forms :: field-errors-summary }"></div>
                         <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                             <div class="sm:col-span-6" th:with="errorsPresent = ${#fields.hasErrors('gender')}">
                                 <label class="block text-sm font-medium text-gray-700"
@@ -43,7 +44,7 @@
                                     </th:block>
                                 </div>
                                 <th:block th:if="${errorsPresent}"
-                                          th:insert="~{ fragments/errors :: field-error-text(
+                                          th:insert="~{ fragments/forms :: field-error-text(
                                         id = 'gender-error',
                                         text = ${#strings.listJoin(#fields.errors('gender'), ', ')}
                                    ) }"></th:block>
@@ -67,11 +68,11 @@
                                                 : 'focus:ring-green-500 focus:border-green-500'
                                             }">
 
-                                    <th:block th:if="${errorsPresent}" th:insert="~{ fragments/errors :: field-error-icon }"></th:block>
+                                    <th:block th:if="${errorsPresent}" th:insert="~{ fragments/forms :: field-error-icon }"></th:block>
                                 </div>
 
                                 <th:block th:if="${errorsPresent}"
-                                          th:insert="~{ fragments/errors :: field-error-text(
+                                          th:insert="~{ fragments/forms :: field-error-text(
                                         id = 'firstName-error',
                                         text = ${#strings.listJoin(#fields.errors('firstName'), ', ')}
                                    ) }"></th:block>
@@ -93,11 +94,11 @@
                                         th:classappend="${errorsPresent
                                             ? 'border-red-300 focus:ring-red-500 focus:border-red-300'
                                             : 'focus:ring-green-500 focus:border-green-500'}">
-                                    <th:block th:if="${errorsPresent}" th:insert="~{ fragments/errors :: field-error-icon }"></th:block>
+                                    <th:block th:if="${errorsPresent}" th:insert="~{ fragments/forms :: field-error-icon }"></th:block>
                                 </div>
 
                                 <th:block th:if="${errorsPresent}"
-                                          th:insert="~{ fragments/errors :: field-error-text(
+                                          th:insert="~{ fragments/forms :: field-error-text(
                                         id = 'lastName-error',
                                         text = ${#strings.listJoin(#fields.errors('lastName'), ', ')}
                                    ) }"></th:block>
@@ -115,11 +116,11 @@
                                            th:field="*{email}"
                                            class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"
                                         th:classappend="${errorsPresent ? 'border-red-300 focus:border-red-300 focus:ring-red-500' : 'focus:ring-green-500 focus:border-green-500'}">
-                                    <th:block th:if="${errorsPresent}" th:insert="~{ fragments/errors :: field-error-icon }"></th:block>
+                                    <th:block th:if="${errorsPresent}" th:insert="~{ fragments/forms :: field-error-icon }"></th:block>
                                 </div>
 
                                 <th:block th:if="${errorsPresent}"
-                                          th:insert="~{ fragments/errors :: field-error-text(
+                                          th:insert="~{ fragments/forms :: field-error-text(
                                         id = 'email-error',
                                         text = ${#strings.listJoin(#fields.errors('email'), ', ')}
                                    ) }"></th:block>
@@ -137,10 +138,10 @@
                                            th:field="*{phoneNumber}"
                                            class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"
                                         th:classappend="${ errorsPresent ? 'border-red-300 focus:border-red-300 focus:ring-red-500' : 'focus:border-green-500 focus:ring-green-500' }">
-                                    <th:block th:if="${errorsPresent}" th:insert="~{ fragments/errors :: field-error-icon }"></th:block>
+                                    <th:block th:if="${errorsPresent}" th:insert="~{ fragments/forms :: field-error-icon }"></th:block>
                                 </div>
                                 <th:block th:if="${errorsPresent}"
-                                   th:insert="~{ fragments/errors :: field-error-text(
+                                   th:insert="~{ fragments/forms :: field-error-text(
                                         id = 'phoneNumber-error',
                                         text = ${#strings.listJoin(#fields.errors('phoneNumber'), ', ')}
                                    ) }"></th:block>
@@ -161,10 +162,10 @@
                                            th:placeholder="#{user.birthday.placeholder}"
                                            class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"
                                         th:classappend="${ errorsPresent ? 'border-red-300 focus:border-red-300 focus:ring-red-500' : 'focus:border-green-500 focus:ring-green-500' }">
-                                    <th:block th:if="${errorsPresent}" th:insert="~{ fragments/errors :: field-error-icon }"></th:block>
+                                    <th:block th:if="${errorsPresent}" th:insert="~{ fragments/forms :: field-error-icon }"></th:block>
                                 </div>
                                 <th:block th:if="${errorsPresent}"
-                                   th:insert="~{ fragments/errors :: field-error-text(
+                                   th:insert="~{ fragments/forms :: field-error-text(
                                         id = 'birthday-error',
                                         text = ${#strings.listJoin(#fields.errors('birthday'), ', ')}
                                    ) }"></th:block>
