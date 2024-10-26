@@ -55,7 +55,6 @@ public class UserController {
         Model model
     ) {
         if (bindingResult.hasErrors()) {
-            LOGGER.warn(bindingResult.toString());
             model.addAttribute("genders", List.of(Gender.MALE, Gender.FEMALE, Gender.OTHER));
             return "users/edit";
         }

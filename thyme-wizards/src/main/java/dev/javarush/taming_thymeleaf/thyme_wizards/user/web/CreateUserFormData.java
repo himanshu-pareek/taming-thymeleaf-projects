@@ -12,6 +12,7 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
+@NonExistingUser
 public class CreateUserFormData {
   @NotBlank
   @Size(min = 3, max = 50)

@@ -7,4 +7,6 @@ public interface UserService {
     User createUser(CreateUserParameters parameters);
 
     Page<User> getAllUsers(Pageable pageable);
+
+  boolean userWithEmailExists(Email email);
 }

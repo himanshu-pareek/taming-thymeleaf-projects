@@ -33,4 +33,9 @@ public class UserServiceImpl implements UserService {
     public Page<User> getAllUsers(Pageable pageable) {
         return userRepository.findAll(pageable);
     }
+
+    @Override
+    public boolean userWithEmailExists(Email email) {
+        return userRepository.findUserByEmail(email).isPresent();
+    }
 }
