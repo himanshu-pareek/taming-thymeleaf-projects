@@ -82,7 +82,7 @@ public class CreateUserFormData {
     this.phoneNumber = phoneNumber;
   }
 
-  public CreateUserParameters toParameters() {
+  public CreateUserParameters toCreateUserParameters() {
     return new CreateUserParameters(
         new Username(firstName, lastName),
         gender,

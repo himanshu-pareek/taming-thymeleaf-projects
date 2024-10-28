@@ -9,4 +9,8 @@ public interface UserService {
     Page<User> getAllUsers(Pageable pageable);
 
   boolean userWithEmailExists(Email email);
+
+  User editUser(UserId userId, EditUserParameters parameters);
+
+  User getUser(UserId userId);
 }

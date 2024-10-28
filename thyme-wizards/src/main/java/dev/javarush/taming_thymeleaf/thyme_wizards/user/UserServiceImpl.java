@@ -1,7 +1,9 @@
 package dev.javarush.taming_thymeleaf.thyme_wizards.user;
 
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,5 +39,27 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean userWithEmailExists(Email email) {
         return userRepository.findUserByEmail(email).isPresent();
+    }
+
+    @Override
+    public User editUser(UserId userId, EditUserParameters parameters) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new UserNotFoundException(userId));
+
+        if (parameters.version() != user.getVersion()) {
+            throw new ObjectOptimisticLockingFailureException(
+                User.class,
+                user.getId().toString()
+            );
+        }
+
+        parameters.update(user);
+        return user;
+    }
+
+    @Override
+    public User getUser(UserId userId) {
+        return this.userRepository.findById(userId)
+            .orElseThrow(() -> new UserNotFoundException(userId));
     }
 }
