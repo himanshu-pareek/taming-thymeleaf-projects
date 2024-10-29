@@ -1,5 +1,6 @@
 package dev.javarush.taming_thymeleaf.thyme_wizards.user;
 
+import java.util.Optional;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -61,5 +62,10 @@ public class UserServiceImpl implements UserService {
     public User getUser(UserId userId) {
         return this.userRepository.findById(userId)
             .orElseThrow(() -> new UserNotFoundException(userId));
+    }
+
+    @Override
+    public Optional<User> getUserUsingEmail(String email) {
+        return this.userRepository.findUserByEmail(new Email(email));
     }
 }

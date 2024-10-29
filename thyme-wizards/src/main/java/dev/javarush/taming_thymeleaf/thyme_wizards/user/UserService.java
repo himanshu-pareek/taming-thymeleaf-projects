@@ -1,5 +1,6 @@
 package dev.javarush.taming_thymeleaf.thyme_wizards.user;
 
+import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,4 +14,6 @@ public interface UserService {
   User editUser(UserId userId, EditUserParameters parameters);
 
   User getUser(UserId userId);
+
+  Optional<User> getUserUsingEmail(String email);
 }

@@ -1,6 +1,5 @@
 package dev.javarush.taming_thymeleaf.thyme_wizards.user.web;
 
-import dev.javarush.taming_thymeleaf.thyme_wizards.infrastructure.validation.ValidationGroupSequence;
 import dev.javarush.taming_thymeleaf.thyme_wizards.infrastructure.web.EditMode;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.Gender;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.User;
@@ -60,7 +59,7 @@ public class UserController {
 
     @PostMapping("create")
     public String createUser(
-        @Validated(ValidationGroupSequence.class) @ModelAttribute("user") CreateUserFormData createUserFormData,
+        @Validated(CreateUserValidationGroupSequence.class) @ModelAttribute("user") CreateUserFormData createUserFormData,
         BindingResult bindingResult,
         Model model
     ) {
@@ -85,7 +84,7 @@ public class UserController {
     @PostMapping("{id}/edit")
     public String editUser(
         @PathVariable("id") UserId userId,
-        @Validated(ValidationGroupSequence.class) @ModelAttribute("user") EditUserFormData formData,
+        @Validated(EditUserValidationGroupSequence.class) @ModelAttribute("user") EditUserFormData formData,
         BindingResult bindingResult,
         Model model
     ) {

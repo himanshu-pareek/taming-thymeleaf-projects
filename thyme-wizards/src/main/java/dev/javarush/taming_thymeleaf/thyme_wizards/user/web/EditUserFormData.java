@@ -1,11 +1,13 @@
 package dev.javarush.taming_thymeleaf.thyme_wizards.user.web;
 
+import dev.javarush.taming_thymeleaf.thyme_wizards.infrastructure.validation.ValidationGroupThree;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.EditUserParameters;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.Email;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.PhoneNumber;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.User;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.Username;
 
+@HasOwnEmail(groups = ValidationGroupThree.class)
 public class EditUserFormData extends CreateUserFormData{
   private String id;
   private long version;
