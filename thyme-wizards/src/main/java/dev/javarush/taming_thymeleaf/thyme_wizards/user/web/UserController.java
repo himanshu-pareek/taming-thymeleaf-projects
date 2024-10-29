@@ -96,4 +96,9 @@ public class UserController {
         userService.editUser(userId, formData.toEditUserParameters());
         return "redirect:/users";
     }
+
+    @GetMapping("ex")
+    public String throwException() {
+        throw new RuntimeException("This is a fake exception for testing");
+    }
 }

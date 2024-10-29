@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en"
-    xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{ layout/layout }">
 <head>
-    <title th:text="#{error}">Error</title>
+    <title th:text="#{error.404}">NOT FOUND</title>
 </head>
 <body>
 <div layout:fragment="page-content">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         <div class="py-4">
             <div class="text-gray-500">
-                <p th:text="#{error.version.conflict}"
+                <p th:text="#{error.page.not.found}"
                    class="mb-6">
-                    Somebody else has edited the same thing as you. Please reload the page and redo your edit.
+                    PAGE NOT FOUND ERROR
                 </p>
-                <a th:href="${url}" class="flex items-center text-sm text-green-600 hover:text-green-900">
+                <a th:href="@{/}" class="flex items-center text-sm text-green-600 hover:text-green-900">
                     <svg viewBox="0 0 20 20"
                          fill="currentColor"
                          class="w-4 h-4 mr-2">
@@ -24,7 +24,7 @@
                               clip-rule="evenodd">
                         </path>
                     </svg>
-                    <span th:text="#{back.to.previous.page}">Back to previous page</span>
+                    <span th:text="#{back.to.home.page}">Back to HOME page</span>
                 </a>
             </div>
         </div>
