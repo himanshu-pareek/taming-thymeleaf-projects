@@ -54,126 +54,161 @@
                                    ) }"></th:block>
                             </div>
 
-                            <div class="sm:col-span-3" th:with="errorsPresent = ${#fields.hasErrors('firstName')}">
-                                <label for="firstName"
-                                       class="block text-sm font-medium text-gray-700"
-                                    th:text="#{user.firstName}">
-                                    FIRST NAME
-                                </label>
-                                <div class="mt-1 relative rounded-md shadow-sm">
-                                    <input type="text"
-                                           name="firstName"
-                                           id="firstName"
-                                           autocomplete="given-name"
-                                           th:field="*{firstName}"
-                                           class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"
-                                            th:classappend="${ errorsPresent
-                                                ? 'border-red-300 focus:border-red-300 focus:ring-red-500'
-                                                : 'focus:ring-green-500 focus:border-green-500'
-                                            }">
+                            <div th:replace="~{ fragments/forms :: text-input(
+                                labelText = #{user.firstName},
+                                fieldName = 'firstName',
+                                cssClass = 'sm:col-span-3'
+                            ) }"></div>
 
-                                    <th:block th:if="${errorsPresent}" th:insert="~{ fragments/forms :: field-error-icon }"></th:block>
-                                </div>
+                            <div th:replace="~{ fragments/forms :: text-input(
+                                labelText = #{user.lastName},
+                                fieldName = 'lastName',
+                                cssClass = 'sm:col-span-3'
+                            ) }"></div>
 
-                                <th:block th:if="${errorsPresent}"
-                                          th:insert="~{ fragments/forms :: field-error-text(
-                                        id = 'firstName-error',
-                                        text = ${#strings.listJoin(#fields.errors('firstName'), ', ')}
-                                   ) }"></th:block>
-                            </div>
+                            <div th:replace="~{ fragments/forms :: text-input(
+                                labelText = #{user.email},
+                                fieldName = 'email',
+                                cssClass = 'sm:col-span-4',
+                                inputType = 'email'
+                            ) }"></div>
 
-                            <div class="sm:col-span-3" th:with="errorsPresent = ${#fields.hasErrors('lastName')}">
-                                <label for="lastName"
-                                       class="block text-sm font-medium text-gray-700"
-                                       th:text="#{user.lastName}">
-                                    LAST NAME
-                                </label>
-                                <div class="mt-1 relative rounded-md shadow-sm">
-                                    <input type="text"
-                                           name="lastName"
-                                           id="lastName"
-                                           autocomplete="family-name"
-                                           th:field="*{lastName}"
-                                           class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"
-                                        th:classappend="${errorsPresent
-                                            ? 'border-red-300 focus:ring-red-500 focus:border-red-300'
-                                            : 'focus:ring-green-500 focus:border-green-500'}">
-                                    <th:block th:if="${errorsPresent}" th:insert="~{ fragments/forms :: field-error-icon }"></th:block>
-                                </div>
-
-                                <th:block th:if="${errorsPresent}"
-                                          th:insert="~{ fragments/forms :: field-error-text(
-                                        id = 'lastName-error',
-                                        text = ${#strings.listJoin(#fields.errors('lastName'), ', ')}
-                                   ) }"></th:block>
-                            </div>
-
-                            <div class="sm:col-span-4" th:with="errorsPresent = ${#fields.hasErrors('email')}">
-                                <label for="email"
-                                       class="block text-sm font-medium text-gray-700 leading-5"
-                                       th:text="#{user.email}">
-                                    EMAIL ADDRESS
-                                </label>
-                                <div class="mt-1 relative rounded-md shadow-sm">
-                                    <input type="email"
-                                           id="email"
-                                           th:field="*{email}"
-                                           class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"
-                                        th:classappend="${errorsPresent ? 'border-red-300 focus:border-red-300 focus:ring-red-500' : 'focus:ring-green-500 focus:border-green-500'}">
-                                    <th:block th:if="${errorsPresent}" th:insert="~{ fragments/forms :: field-error-icon }"></th:block>
-                                </div>
-
-                                <th:block th:if="${errorsPresent}"
-                                          th:insert="~{ fragments/forms :: field-error-text(
-                                        id = 'email-error',
-                                        text = ${#strings.listJoin(#fields.errors('email'), ', ')}
-                                   ) }"></th:block>
-                            </div>
-
-                            <div class="sm:col-span-4" th:with="errorsPresent = ${#fields.hasErrors('phoneNumber')}">
-                                <label for="phoneNumber"
-                                       class="block text-sm font-medium text-gray-700 leading-5"
-                                        th:text="#{user.phoneNumber}">
-                                    PHONE NUMBER
-                                </label>
-                                <div class="mt-1 relative rounded-md shadow-sm">
-                                    <input id="phoneNumber"
-                                           type="text"
-                                           th:field="*{phoneNumber}"
-                                           class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"
-                                        th:classappend="${ errorsPresent ? 'border-red-300 focus:border-red-300 focus:ring-red-500' : 'focus:border-green-500 focus:ring-green-500' }">
-                                    <th:block th:if="${errorsPresent}" th:insert="~{ fragments/forms :: field-error-icon }"></th:block>
-                                </div>
-                                <th:block th:if="${errorsPresent}"
-                                   th:insert="~{ fragments/forms :: field-error-text(
-                                        id = 'phoneNumber-error',
-                                        text = ${#strings.listJoin(#fields.errors('phoneNumber'), ', ')}
-                                   ) }"></th:block>
-                            </div>
+                            <div th:replace="~{ fragments/forms :: text-input(
+                                labelText = #{user.phoneNumber},
+                                fieldName = 'phoneNumber',
+                                cssClass = 'sm:col-span-4',
+                                inputType = 'text'
+                            ) }"></div>
 
                             <div class="sm:col-span-2"></div>
-                            <div class="sm:col-span-2" th:with="errorsPresent = ${#fields.hasErrors('birthday')}">
-                                <label for="birthday"
-                                       class="block text-sm font-medium text-gray-700 leading-5"
-                                       th:text="#{user.birthday}">
-                                    BIRTHDAY
-                                </label>
-                                <div class="mt-1 relative rounded-md shadow-sm">
-                                    <input id="birthday"
-                                           name="birthday"
-                                           type="text"
-                                           th:field="*{birthday}"
-                                           th:placeholder="#{user.birthday.placeholder}"
-                                           class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"
-                                        th:classappend="${ errorsPresent ? 'border-red-300 focus:border-red-300 focus:ring-red-500' : 'focus:border-green-500 focus:ring-green-500' }">
-                                    <th:block th:if="${errorsPresent}" th:insert="~{ fragments/forms :: field-error-icon }"></th:block>
-                                </div>
-                                <th:block th:if="${errorsPresent}"
-                                   th:insert="~{ fragments/forms :: field-error-text(
-                                        id = 'birthday-error',
-                                        text = ${#strings.listJoin(#fields.errors('birthday'), ', ')}
-                                   ) }"></th:block>
-                            </div>
+
+                            <div th:replace="~{ fragments/forms :: text-input(
+                                labelText = #{user.birthday},
+                                fieldName = 'birthday',
+                                cssClass = 'sm:col-span-2',
+                                placeholder = #{user.birthday.placeholder}
+                            ) }"></div>
+
+<!--                            <div class="sm:col-span-3" th:with="errorsPresent = ${#fields.hasErrors('firstName')}">-->
+<!--                                <label for="firstName"-->
+<!--                                       class="block text-sm font-medium text-gray-700"-->
+<!--                                    th:text="#{user.firstName}">-->
+<!--                                    FIRST NAME-->
+<!--                                </label>-->
+<!--                                <div class="mt-1 relative rounded-md shadow-sm">-->
+<!--                                    <input type="text"-->
+<!--                                           name="firstName"-->
+<!--                                           id="firstName"-->
+<!--                                           autocomplete="given-name"-->
+<!--                                           th:field="*{firstName}"-->
+<!--                                           class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"-->
+<!--                                            th:classappend="${ errorsPresent-->
+<!--                                                ? 'border-red-300 focus:border-red-300 focus:ring-red-500'-->
+<!--                                                : 'focus:ring-green-500 focus:border-green-500'-->
+<!--                                            }">-->
+
+<!--                                    <th:block th:if="${errorsPresent}" th:insert="~{ fragments/forms :: field-error-icon }"></th:block>-->
+<!--                                </div>-->
+
+<!--                                <th:block th:if="${errorsPresent}"-->
+<!--                                          th:insert="~{ fragments/forms :: field-error-text(-->
+<!--                                        id = 'firstName-error',-->
+<!--                                        text = ${#strings.listJoin(#fields.errors('firstName'), ', ')}-->
+<!--                                   ) }"></th:block>-->
+<!--                            </div>-->
+
+<!--                            <div class="sm:col-span-3" th:with="errorsPresent = ${#fields.hasErrors('lastName')}">-->
+<!--                                <label for="lastName"-->
+<!--                                       class="block text-sm font-medium text-gray-700"-->
+<!--                                       th:text="#{user.lastName}">-->
+<!--                                    LAST NAME-->
+<!--                                </label>-->
+<!--                                <div class="mt-1 relative rounded-md shadow-sm">-->
+<!--                                    <input type="text"-->
+<!--                                           name="lastName"-->
+<!--                                           id="lastName"-->
+<!--                                           autocomplete="family-name"-->
+<!--                                           th:field="*{lastName}"-->
+<!--                                           class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"-->
+<!--                                        th:classappend="${errorsPresent-->
+<!--                                            ? 'border-red-300 focus:ring-red-500 focus:border-red-300'-->
+<!--                                            : 'focus:ring-green-500 focus:border-green-500'}">-->
+<!--                                    <th:block th:if="${errorsPresent}" th:insert="~{ fragments/forms :: field-error-icon }"></th:block>-->
+<!--                                </div>-->
+
+<!--                                <th:block th:if="${errorsPresent}"-->
+<!--                                          th:insert="~{ fragments/forms :: field-error-text(-->
+<!--                                        id = 'lastName-error',-->
+<!--                                        text = ${#strings.listJoin(#fields.errors('lastName'), ', ')}-->
+<!--                                   ) }"></th:block>-->
+<!--                            </div>-->
+
+<!--                            <div class="sm:col-span-4" th:with="errorsPresent = ${#fields.hasErrors('email')}">-->
+<!--                                <label for="email"-->
+<!--                                       class="block text-sm font-medium text-gray-700 leading-5"-->
+<!--                                       th:text="#{user.email}">-->
+<!--                                    EMAIL ADDRESS-->
+<!--                                </label>-->
+<!--                                <div class="mt-1 relative rounded-md shadow-sm">-->
+<!--                                    <input type="email"-->
+<!--                                           id="email"-->
+<!--                                           th:field="*{email}"-->
+<!--                                           class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"-->
+<!--                                        th:classappend="${errorsPresent ? 'border-red-300 focus:border-red-300 focus:ring-red-500' : 'focus:ring-green-500 focus:border-green-500'}">-->
+<!--                                    <th:block th:if="${errorsPresent}" th:insert="~{ fragments/forms :: field-error-icon }"></th:block>-->
+<!--                                </div>-->
+
+<!--                                <th:block th:if="${errorsPresent}"-->
+<!--                                          th:insert="~{ fragments/forms :: field-error-text(-->
+<!--                                        id = 'email-error',-->
+<!--                                        text = ${#strings.listJoin(#fields.errors('email'), ', ')}-->
+<!--                                   ) }"></th:block>-->
+<!--                            </div>-->
+
+<!--                            <div class="sm:col-span-4" th:with="errorsPresent = ${#fields.hasErrors('phoneNumber')}">-->
+<!--                                <label for="phoneNumber"-->
+<!--                                       class="block text-sm font-medium text-gray-700 leading-5"-->
+<!--                                        th:text="#{user.phoneNumber}">-->
+<!--                                    PHONE NUMBER-->
+<!--                                </label>-->
+<!--                                <div class="mt-1 relative rounded-md shadow-sm">-->
+<!--                                    <input id="phoneNumber"-->
+<!--                                           type="text"-->
+<!--                                           th:field="*{phoneNumber}"-->
+<!--                                           class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"-->
+<!--                                        th:classappend="${ errorsPresent ? 'border-red-300 focus:border-red-300 focus:ring-red-500' : 'focus:border-green-500 focus:ring-green-500' }">-->
+<!--                                    <th:block th:if="${errorsPresent}" th:insert="~{ fragments/forms :: field-error-icon }"></th:block>-->
+<!--                                </div>-->
+<!--                                <th:block th:if="${errorsPresent}"-->
+<!--                                   th:insert="~{ fragments/forms :: field-error-text(-->
+<!--                                        id = 'phoneNumber-error',-->
+<!--                                        text = ${#strings.listJoin(#fields.errors('phoneNumber'), ', ')}-->
+<!--                                   ) }"></th:block>-->
+<!--                            </div>-->
+
+<!--                            <div class="sm:col-span-2"></div>-->
+<!--                            <div class="sm:col-span-2" th:with="errorsPresent = ${#fields.hasErrors('birthday')}">-->
+<!--                                <label for="birthday"-->
+<!--                                       class="block text-sm font-medium text-gray-700 leading-5"-->
+<!--                                       th:text="#{user.birthday}">-->
+<!--                                    BIRTHDAY-->
+<!--                                </label>-->
+<!--                                <div class="mt-1 relative rounded-md shadow-sm">-->
+<!--                                    <input id="birthday"-->
+<!--                                           name="birthday"-->
+<!--                                           type="text"-->
+<!--                                           th:field="*{birthday}"-->
+<!--                                           th:placeholder="#{user.birthday.placeholder}"-->
+<!--                                           class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"-->
+<!--                                        th:classappend="${ errorsPresent ? 'border-red-300 focus:border-red-300 focus:ring-red-500' : 'focus:border-green-500 focus:ring-green-500' }">-->
+<!--                                    <th:block th:if="${errorsPresent}" th:insert="~{ fragments/forms :: field-error-icon }"></th:block>-->
+<!--                                </div>-->
+<!--                                <th:block th:if="${errorsPresent}"-->
+<!--                                   th:insert="~{ fragments/forms :: field-error-text(-->
+<!--                                        id = 'birthday-error',-->
+<!--                                        text = ${#strings.listJoin(#fields.errors('birthday'), ', ')}-->
+<!--                                   ) }"></th:block>-->
+<!--                            </div>-->
                         </div>
                     </div>
 

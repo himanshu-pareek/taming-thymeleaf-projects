@@ -48,5 +48,36 @@
     </div>
 </div>
 
+<div th:fragment="text-input(labelText, fieldName, cssClass)"
+     th:with="inputType = ${inputType ?: 'text'},
+        placeholder = ${placeholder ?: ''},
+        errorsPresent = ${#fields.hasErrors(fieldName)}"
+     th:class="${cssClass}">
+    <label th:for="${'id-' + fieldName}"
+           class="block text-sm font-medium text-gray-700"
+           th:text="${labelText}">
+        LABEL TEXT
+    </label>
+    <div class="mt-1 relative rounded-md shadow-sm">
+        <input th:type="${inputType}"
+               id="${'id-' + fieldName}"
+               th:field="*{__${fieldName}__}"
+               th:placeholder="${placeholder}"
+               class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"
+               th:classappend="${ errorsPresent
+                    ? 'border-red-300 focus:border-red-300 focus:ring-red-500'
+                    : 'focus:ring-green-500 focus:border-green-500'
+                }">
+
+        <th:block th:if="${errorsPresent}" th:insert="~{ :: field-error-icon }"></th:block>
+    </div>
+
+    <th:block th:if="${errorsPresent}"
+              th:insert="~{ :: field-error-text(
+                    id = fieldName + '-error',
+                    text = ${#strings.listJoin(#fields.errors(fieldName), ', ')}
+               ) }"></th:block>
+</div>
+
 </body>
 </html>
