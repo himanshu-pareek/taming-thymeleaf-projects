@@ -53,7 +53,7 @@
                                     ) }"></td>
                                     <td th:x-data="|{
                                         name: '${user.username.fullName}',
-                                        deleteUrl: '/users/${user.id.asString()}/delete'
+                                        deleteUrl: '/users/${user.id.asString()}'
                                     }|"
                                         class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
                                         <a href="javascript:void(0)"
@@ -144,7 +144,7 @@
                     <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                         <form id="deleteForm"
                               enctype="multipart/form-data"
-                              method="post"
+                              th:method="delete"
                               x-bind:action="getDeleteUrl()">
 <!--                            <input type="hidden"-->
 <!--                                   th:name="${_csrf.parameterName}"-->
