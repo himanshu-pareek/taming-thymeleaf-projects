@@ -101,4 +101,10 @@ public class UserController {
     public String throwException() {
         throw new RuntimeException("This is a fake exception for testing");
     }
+
+    @PostMapping("{id}/delete")
+    public String deleteUser(@PathVariable("id") UserId userId) {
+        userService.deleteUser(userId);
+        return "redirect:/users";
+    }
 }

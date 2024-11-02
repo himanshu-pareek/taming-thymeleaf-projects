@@ -68,4 +68,9 @@ public class UserServiceImpl implements UserService {
     public Optional<User> getUserUsingEmail(String email) {
         return this.userRepository.findUserByEmail(new Email(email));
     }
+
+    @Override
+    public void deleteUser(UserId userId) {
+        this.userRepository.deleteById(userId);
+    }
 }
