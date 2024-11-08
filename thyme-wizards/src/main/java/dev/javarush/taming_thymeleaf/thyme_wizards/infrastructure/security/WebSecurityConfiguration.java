@@ -39,11 +39,8 @@ public class WebSecurityConfiguration {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests(
         authz -> authz.requestMatchers("/users/create").hasRole("ADMIN")
-            .requestMatchers("/users/*/delete").hasRole("ADMIN")
-            .requestMatchers("/users/*/edit").hasRole("ADMIN")
-            .requestMatchers(HttpMethod.GET, "/users/**").hasRole("USER")
-            .requestMatchers(HttpMethod.POST, "/users/**").hasRole("ADMIN")
-            .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
+            .requestMatchers(HttpMethod.GET, "/users", "/users/*").hasRole("USER")
+            .requestMatchers("/users/**").hasRole("ADMIN")
             .anyRequest().authenticated()
     )
         .formLogin(Customizer.withDefaults())
