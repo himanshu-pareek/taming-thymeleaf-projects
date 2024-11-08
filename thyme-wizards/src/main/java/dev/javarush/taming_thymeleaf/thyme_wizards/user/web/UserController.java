@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,6 +53,7 @@ public class UserController {
     }
 
     @GetMapping("create")
+    @Secured("ROLE_ADMIN")
     public String createUserForm(Model model) {
         model.addAttribute("user", new CreateUserFormData());
         model.addAttribute("genders", GENDERS);
@@ -60,6 +62,7 @@ public class UserController {
     }
 
     @PostMapping("create")
+    @Secured("ROLE_ADMIN")
     public String createUser(
         @Validated(CreateUserValidationGroupSequence.class) @ModelAttribute("user") CreateUserFormData createUserFormData,
         BindingResult bindingResult,
@@ -75,6 +78,7 @@ public class UserController {
     }
 
     @GetMapping("{id}/edit")
+    @Secured("ROLE_ADMIN")
     public String editUserForm(@PathVariable("id") UserId userId, Model model) {
         User user = userService.getUser(userId);
         model.addAttribute("user", EditUserFormData.fromUser(user));
@@ -84,6 +88,7 @@ public class UserController {
     }
 
     @PostMapping("{id}/edit")
+    @Secured("ROLE_ADMIN")
     public String editUser(
         @PathVariable("id") UserId userId,
         @Validated(EditUserValidationGroupSequence.class) @ModelAttribute("user") EditUserFormData formData,
@@ -105,6 +110,7 @@ public class UserController {
     }
 
     @DeleteMapping("{id}")
+    @Secured("ROLE_ADMIN")
     public String deleteUser(
         @PathVariable("id") UserId userId,
         RedirectAttributes redirectAttributes

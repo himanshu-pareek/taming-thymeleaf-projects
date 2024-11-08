@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +14,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableMethodSecurity(securedEnabled = true)
 public class WebSecurityConfiguration {
   private final PasswordEncoder passwordEncoder;
 
@@ -35,16 +37,16 @@ public class WebSecurityConfiguration {
     return new InMemoryUserDetailsManager(user, admin);
   }
 
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http.authorizeHttpRequests(
-        authz -> authz.requestMatchers("/users/create").hasRole("ADMIN")
-            .requestMatchers(HttpMethod.GET, "/users", "/users/*").hasRole("USER")
-            .requestMatchers("/users/**").hasRole("ADMIN")
-            .anyRequest().authenticated()
-    )
-        .formLogin(Customizer.withDefaults())
-        .logout(Customizer.withDefaults());
-    return http.build();
-  }
+//  @Bean
+//  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//    http.authorizeHttpRequests(
+//        authz -> authz.requestMatchers("/users/create").hasRole("ADMIN")
+//            .requestMatchers(HttpMethod.GET, "/users", "/users/*").hasRole("USER")
+//            .requestMatchers("/users/**").hasRole("ADMIN")
+//            .anyRequest().authenticated()
+//    )
+//        .formLogin(Customizer.withDefaults())
+//        .logout(Customizer.withDefaults());
+//    return http.build();
+//  }
 }
