@@ -1,5 +1,7 @@
 package dev.javarush.taming_thymeleaf.thyme_wizards.infrastructure.security;
 
+import jakarta.servlet.DispatcherType;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -37,16 +39,19 @@ public class WebSecurityConfiguration {
     return new InMemoryUserDetailsManager(user, admin);
   }
 
-//  @Bean
-//  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//    http.authorizeHttpRequests(
-//        authz -> authz.requestMatchers("/users/create").hasRole("ADMIN")
-//            .requestMatchers(HttpMethod.GET, "/users", "/users/*").hasRole("USER")
-//            .requestMatchers("/users/**").hasRole("ADMIN")
-//            .anyRequest().authenticated()
-//    )
-//        .formLogin(Customizer.withDefaults())
-//        .logout(Customizer.withDefaults());
-//    return http.build();
-//  }
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http.authorizeHttpRequests(
+        authz -> authz.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+            .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+            .requestMatchers("/svg/*").permitAll()
+            .anyRequest().authenticated()
+    )
+        .formLogin(
+            formLogin -> formLogin.loginPage("/login")
+                .permitAll()
+        )
+        .logout(Customizer.withDefaults());
+    return http.build();
+  }
 }

@@ -63,8 +63,15 @@
                     <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
                        id="user-menu-item-1">Settings</a>
 
-                    <a href="/logout" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                       id="user-menu-item-2">Sign out</a>
+                    <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        <form th:action="@{/logout}"
+                              method="post">
+                            <button type="submit"
+                                    th:text="#{menu.logout}">
+                                SIGN OUT
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
