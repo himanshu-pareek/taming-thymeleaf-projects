@@ -28,6 +28,13 @@
                 ) }"></div>
             </th:block>
 
+            <th:block th:if="${param.error}">
+                <div th:replace="~{ fragments/alerts :: error (
+                    message = #{login.error.message},
+                    useHorizontalPadding = false
+                ) }"></div>
+            </th:block>
+
             <form th:action="@{/login}" method="post">
                 <div>
                     <label for="username"
@@ -93,5 +100,7 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" th:src="@{/webjars/alpinejs/dist/cdn.min.js}" defer></script>
+<script th:replace="~{ fragments/alerts :: alert-js }"></script>
 </body>
 </html>
