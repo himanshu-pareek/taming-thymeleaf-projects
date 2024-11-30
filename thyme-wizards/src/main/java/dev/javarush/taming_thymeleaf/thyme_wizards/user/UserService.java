@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 public interface UserService {
     User createUser(CreateUserParameters parameters);
 
+    User createAdministrator(CreateUserParameters parameters);
+
     Page<User> getAllUsers(Pageable pageable);
 
   boolean userWithEmailExists(Email email);

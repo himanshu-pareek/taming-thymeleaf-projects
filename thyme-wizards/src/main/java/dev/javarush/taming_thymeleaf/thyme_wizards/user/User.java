@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import jakarta.persistence.Version;
+import java.util.Set;
 
 @Entity(name = "User")
 @Table(name = "users")
@@ -29,18 +30,80 @@ public class User {
     @NotNull
     private PhoneNumber phoneNumber;
 
+    @ElementCollection(targetClass = UserRole.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "user_roles")
+    @Column(name = "role")
+    private Set<UserRole> roles;
+
+    @NotNull
+    private String password;
+
     @Version
     private long version;
 
     protected User() {}
 
-    public User(UserId id, Username username, Gender gender, LocalDate birthday, Email email, PhoneNumber phoneNumber) {
+    public User(
+        UserId id,
+        Username username,
+        Gender gender,
+        LocalDate birthday,
+        Email email,
+        PhoneNumber phoneNumber,
+        Set<UserRole> roles,
+        String password
+    ) {
         this.id = id;
         this.username = username;
         this.gender = gender;
         this.birthday = birthday;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.roles = roles;
+        this.password = password;
+    }
+
+    public static User createUser(
+        UserId id,
+        Username username,
+        Gender gender,
+        LocalDate birthday,
+        Email email,
+        PhoneNumber phoneNumber,
+        String encodedPassword
+    ) {
+        return new User(
+            id,
+            username,
+            gender,
+            birthday,
+            email,
+            phoneNumber,
+            Set.of(UserRole.USER),
+            encodedPassword
+        );
+    }
+
+    public static User createAdministrator(
+        UserId id,
+        Username username,
+        Gender gender,
+        LocalDate birthday,
+        Email email,
+        PhoneNumber phoneNumber,
+        String encodedPassword
+    ) {
+        return new User(
+            id,
+            username,
+            gender,
+            birthday,
+            email,
+            phoneNumber,
+            Set.of(UserRole.USER, UserRole.ADMIN),
+            encodedPassword
+        );
     }
 
     public UserId getId() {
@@ -93,6 +156,14 @@ public class User {
     public void setPhoneNumber(
         @NotNull PhoneNumber phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public @NotNull String getPassword() {
+        return password;
+    }
+
+    public Set<UserRole> getRoles() {
+        return roles;
     }
 
     public void setVersion(long version) {

@@ -53,8 +53,10 @@
                      x-transition:leave-start="opacity-100 scale-100"
                      x-transition:leave-end="opacity-0 scale-95">
                     <!-- Active: "bg-gray-100", Not Active: "" -->
-                    <div class="block px-4 py-2 text-sm text-gray-700 font-mono border-b"
-                         sec:authentication="name"></div>
+                    <div class="block px-4 pt-2 text-sm text-gray-700 font-mono"
+                         sec:authentication="principal.displayName"></div>
+                    <div class="block px-4 py-2 text-xs text-gray-400 font-mono border-b truncate"
+                         sec:authentication="principal.username"></div>
                     <div class="block px-4 py-2 text-sm text-gray-700 font-mono border-b"
                          sec:authentication="principal.authorities"></div>
                     <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"

@@ -88,7 +88,8 @@ public class CreateUserFormData {
         gender,
         birthday,
         new dev.javarush.taming_thymeleaf.thyme_wizards.user.Email(email),
-        new PhoneNumber(phoneNumber)
+        new PhoneNumber(phoneNumber),
+        firstName.toLowerCase()
     );
   }
 }
