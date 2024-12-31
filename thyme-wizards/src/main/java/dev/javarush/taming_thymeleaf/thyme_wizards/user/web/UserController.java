@@ -4,7 +4,10 @@ import dev.javarush.taming_thymeleaf.thyme_wizards.infrastructure.web.EditMode;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.Gender;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.User;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.UserId;
+import dev.javarush.taming_thymeleaf.thyme_wizards.user.UserRole;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.UserService;
+
+import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +32,10 @@ public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
     private static final List<Gender> GENDERS = List.of(
-        Gender.MALE,
-        Gender.FEMALE,
-        Gender.OTHER
-    );
+            Gender.MALE,
+            Gender.FEMALE,
+            Gender.OTHER);
+    private static final List<UserRole> ROLES = List.of(UserRole.values());
 
     private final UserService userService;
 
@@ -42,12 +45,11 @@ public class UserController {
 
     @GetMapping
     public String index(
-        Model model,
-        @SortDefault.SortDefaults({
-            @SortDefault("username.lastName"),
-            @SortDefault("username.firstName")
-        }) Pageable pageable
-    ) {
+            Model model,
+            @SortDefault.SortDefaults({
+                    @SortDefault("username.lastName"),
+                    @SortDefault("username.firstName")
+            }) Pageable pageable) {
         model.addAttribute("users", userService.getAllUsers(pageable));
         return "users/index";
     }
@@ -58,18 +60,19 @@ public class UserController {
         model.addAttribute("user", new CreateUserFormData());
         model.addAttribute("genders", GENDERS);
         model.addAttribute("editMode", EditMode.CREATE);
+        model.addAttribute("possibleRoles", ROLES);
         return "users/edit";
     }
 
     @PostMapping("create")
     @Secured("ROLE_ADMIN")
     public String createUser(
-        @Validated(CreateUserValidationGroupSequence.class) @ModelAttribute("user") CreateUserFormData createUserFormData,
-        BindingResult bindingResult,
-        Model model
-    ) {
+            @Validated(CreateUserValidationGroupSequence.class) @ModelAttribute("user") CreateUserFormData createUserFormData,
+            BindingResult bindingResult,
+            Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("genders", GENDERS);
+            model.addAttribute("possibleRoles", ROLES);
             return "users/edit";
         }
 
@@ -84,20 +87,21 @@ public class UserController {
         model.addAttribute("user", EditUserFormData.fromUser(user));
         model.addAttribute("genders", GENDERS);
         model.addAttribute("editMode", EditMode.UPDATE);
+        model.addAttribute("possibleRoles", ROLES);
         return "users/edit";
     }
 
     @PostMapping("{id}/edit")
     @Secured("ROLE_ADMIN")
     public String editUser(
-        @PathVariable("id") UserId userId,
-        @Validated(EditUserValidationGroupSequence.class) @ModelAttribute("user") EditUserFormData formData,
-        BindingResult bindingResult,
-        Model model
-    ) {
+            @PathVariable("id") UserId userId,
+            @Validated(EditUserValidationGroupSequence.class) @ModelAttribute("user") EditUserFormData formData,
+            BindingResult bindingResult,
+            Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("genders", GENDERS);
             model.addAttribute("editMode", EditMode.UPDATE);
+            model.addAttribute("possibleRoles", ROLES);
             return "users/edit";
         }
         userService.editUser(userId, formData.toEditUserParameters());
@@ -112,9 +116,8 @@ public class UserController {
     @DeleteMapping("{id}")
     @Secured("ROLE_ADMIN")
     public String deleteUser(
-        @PathVariable("id") UserId userId,
-        RedirectAttributes redirectAttributes
-    ) {
+            @PathVariable("id") UserId userId,
+            RedirectAttributes redirectAttributes) {
         User user = userService.getUser(userId);
         userService.deleteUser(userId);
         redirectAttributes.addFlashAttribute("deletedUserName", user.getUsername().getFullName());

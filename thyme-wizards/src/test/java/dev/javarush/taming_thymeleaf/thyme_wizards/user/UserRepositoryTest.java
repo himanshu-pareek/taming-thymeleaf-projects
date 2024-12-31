@@ -18,6 +18,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
+import java.util.Set;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -54,8 +55,9 @@ class UserRepositoryTest {
                 Gender.MALE,
                 LocalDate.of(1997, 1, 1),
                 new Email("him@fakeemail.com"),
-                new PhoneNumber("9876543210")
-        ));
+                new PhoneNumber("9876543210"),
+                Set.of(UserRole.USER),
+                "password"));
 
         entityManager.flush();
 
@@ -63,7 +65,8 @@ class UserRepositoryTest {
         assertEquals("Himanshu", jdbcTemplate.queryForObject("SELECT first_name FROM users", String.class));
         assertEquals("Pareek", jdbcTemplate.queryForObject("SELECT last_name FROM users", String.class));
         assertEquals(Gender.MALE, jdbcTemplate.queryForObject("SELECT gender FROM users", Gender.class));
-        assertEquals(LocalDate.of(1997, 1, 1), jdbcTemplate.queryForObject("SELECT birthday FROM users", LocalDate.class));
+        assertEquals(LocalDate.of(1997, 1, 1),
+                jdbcTemplate.queryForObject("SELECT birthday FROM users", LocalDate.class));
         assertEquals("him@fakeemail.com", jdbcTemplate.queryForObject("SELECT email FROM users", String.class));
         assertEquals("9876543210", jdbcTemplate.queryForObject("SELECT phone_number FROM users", String.class));
     }
@@ -73,19 +76,18 @@ class UserRepositoryTest {
         saveUsers(8);
 
         Sort sort = Sort.by(
-            Sort.Direction.ASC,
-            "username.firstName", "username.lastName"
-        );
+                Sort.Direction.ASC,
+                "username.firstName", "username.lastName");
         assertThat(userRepository.findAll(PageRequest.of(0, 5, sort))).hasSize(5)
-            .extracting(User::getUsername)
-            .extracting(Username::getFullName)
-            .containsExactly("Jane Doe1", "Jane Doe3", "Jane Doe5", "Jane Doe7", "John Doe0");
+                .extracting(User::getUsername)
+                .extracting(Username::getFullName)
+                .containsExactly("Jane Doe1", "Jane Doe3", "Jane Doe5", "Jane Doe7", "John Doe0");
 
         assertThat(userRepository.findAll(PageRequest.of(1, 5, sort)))
-            .hasSize(3)
-            .extracting(User::getUsername)
-            .extracting(Username::getFullName)
-            .containsExactly("John Doe2", "John Doe4", "John Doe6");
+                .hasSize(3)
+                .extracting(User::getUsername)
+                .extracting(Username::getFullName)
+                .containsExactly("John Doe2", "John Doe4", "John Doe6");
 
         assertThat(userRepository.findAll(PageRequest.of(2, 5, sort))).isEmpty();
     }
@@ -93,15 +95,15 @@ class UserRepositoryTest {
     private void saveUsers(int numberOfUsers) {
         for (int i = 0; i < numberOfUsers; i++) {
             userRepository.save(
-                new User(
-                    userRepository.nextId(),
-                    new Username(i % 2 == 0 ? "John" : "Jane", "Doe" + i),
-                    i % 2 == 0 ? Gender.MALE : Gender.FEMALE,
-                    LocalDate.of(1990, 1, 1),
-                    new Email((i % 2 == 0 ? "john" : "jane") + ".doe@fakeemail.com"),
-                    new PhoneNumber("9876543210")
-                )
-            );
+                    new User(
+                            userRepository.nextId(),
+                            new Username(i % 2 == 0 ? "John" : "Jane", "Doe" + i),
+                            i % 2 == 0 ? Gender.MALE : Gender.FEMALE,
+                            LocalDate.of(1990, 1, 1),
+                            new Email((i % 2 == 0 ? "john" : "jane") + ".doe@fakeemail.com"),
+                            new PhoneNumber("9876543210"),
+                            Set.of(UserRole.USER, UserRole.ADMIN),
+                            "password" + i));
         }
     }
 

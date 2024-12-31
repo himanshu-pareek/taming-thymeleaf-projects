@@ -16,7 +16,6 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         <div class="py-4">
             <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
-
                 <form id="user-form"
                     th:object="${user}"
                     th:action="${ editMode?.name() == 'UPDATE' } ? @{/users/{id}/edit(id=${user.getId()})} : @{/users/create}"
@@ -87,6 +86,40 @@
                                 fieldName = 'birthday',
                                 cssClass = 'sm:col-span-2',
                                 placeholder = #{user.birthday.placeholder}
+                            ) }"></div>
+
+                            <div class="sm:col-span-2">
+                                <label for="user-role"
+                                       class="block text-sm font-medium text-gray-700"
+                                       th:text="#{user.role}">
+                                    USER ROLE
+                                </label>
+
+                                <select id="user-role"
+                                        class="max-w-lg block focus:ring-green-500 focus:border-green-500 width-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                                        th:field="*{role}">
+                                    <option th:each="role: ${possibleRoles}"
+                                            th:text="#{'user.roles.' + ${role.name}}"
+                                            th:value="${role.name}">
+                                        USER ROLE
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div th:replace="~{ fragments/forms :: text-input(
+                                labelText = #{user.password.input.label},
+                                fieldName = 'password',
+                                cssClass = 'sm:col-span-4',
+                                inputType = 'password',
+                                placeholder = #{user.password.input.placeholder}
+                            ) }"></div>
+
+                            <div th:replace="~{ fragments/forms :: text-input(
+                                labelText = #{user.password-repeated.input.label},
+                                fieldName = 'passwordRepeated',
+                                cssClass = 'sm:col-span-4',
+                                inputType = 'password',
+                                placeholder = #{user.password-repeated.input.placeholder}
                             ) }"></div>
                         </div>
                     </div>

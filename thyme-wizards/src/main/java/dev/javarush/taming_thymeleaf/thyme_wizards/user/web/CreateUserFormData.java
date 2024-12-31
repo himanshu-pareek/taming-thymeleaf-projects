@@ -5,6 +5,7 @@ import dev.javarush.taming_thymeleaf.thyme_wizards.infrastructure.validation.Val
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.CreateUserParameters;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.Gender;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.PhoneNumber;
+import dev.javarush.taming_thymeleaf.thyme_wizards.user.UserRole;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.Username;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @NonExistingUser(groups = ValidationGroupTwo.class)
+@PasswordMatch(groups = ValidationGroupTwo.class)
 public class CreateUserFormData {
   @NotBlank
   @Size(min = 3, max = 50, groups = ValidationGroupOne.class)
@@ -33,6 +35,12 @@ public class CreateUserFormData {
   @NotBlank
   @Pattern(regexp = "[0-9.\\-() x/+]+", groups = ValidationGroupOne.class)
   private String phoneNumber;
+  @NotNull
+  private UserRole role;
+  @NotBlank
+  @Size(min = 4, max = 50, groups = ValidationGroupOne.class)
+  private String password;
+  private String passwordRepeated;
 
   public String getFirstName() {
     return firstName;
@@ -82,6 +90,30 @@ public class CreateUserFormData {
     this.phoneNumber = phoneNumber;
   }
 
+  public UserRole getRole() {
+    return role;
+  }
+
+  public void setRole(UserRole role) {
+    this.role = role;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public String getPasswordRepeated() {
+    return passwordRepeated;
+  }
+
+  public void setPasswordRepeated(String passwordRepeated) {
+    this.passwordRepeated = passwordRepeated;
+  }
+
   public CreateUserParameters toCreateUserParameters() {
     return new CreateUserParameters(
         new Username(firstName, lastName),
@@ -89,7 +121,6 @@ public class CreateUserFormData {
         birthday,
         new dev.javarush.taming_thymeleaf.thyme_wizards.user.Email(email),
         new PhoneNumber(phoneNumber),
-        firstName.toLowerCase()
-    );
+        firstName.toLowerCase());
   }
 }

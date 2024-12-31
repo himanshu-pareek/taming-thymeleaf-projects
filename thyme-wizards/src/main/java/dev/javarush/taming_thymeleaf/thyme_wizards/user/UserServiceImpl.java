@@ -3,7 +3,6 @@ package dev.javarush.taming_thymeleaf.thyme_wizards.user;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
@@ -22,48 +21,44 @@ public class UserServiceImpl implements UserService {
 
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-      this.passwordEncoder = passwordEncoder;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public User createUser(CreateUserParameters parameters) {
         LOGGER.debug(
-            "Creating user {} ({})",
-            parameters.username().getFullName(),
-            parameters.email().asString()
-        );
+                "Creating user {} ({})",
+                parameters.username().getFullName(),
+                parameters.email().asString());
         UserId userId = this.userRepository.nextId();
         String encodedPassword = passwordEncoder.encode(parameters.password());
         User user = User.createUser(
-            userId,
-            parameters.username(),
-            parameters.gender(),
-            parameters.birthday(),
-            parameters.email(),
-            parameters.phoneNumber(),
-            encodedPassword
-        );
+                userId,
+                parameters.username(),
+                parameters.gender(),
+                parameters.birthday(),
+                parameters.email(),
+                parameters.phoneNumber(),
+                encodedPassword);
         return this.userRepository.save(user);
     }
 
     @Override
     public User createAdministrator(CreateUserParameters parameters) {
         LOGGER.debug(
-            "Creating administrator {} ({})",
-            parameters.username().getFullName(),
-            parameters.email().asString()
-        );
+                "Creating administrator {} ({})",
+                parameters.username().getFullName(),
+                parameters.email().asString());
         UserId userId = this.userRepository.nextId();
         String encodedPassword = passwordEncoder.encode(parameters.password());
         User user = User.createAdministrator(
-            userId,
-            parameters.username(),
-            parameters.gender(),
-            parameters.birthday(),
-            parameters.email(),
-            parameters.phoneNumber(),
-            encodedPassword
-        );
+                userId,
+                parameters.username(),
+                parameters.gender(),
+                parameters.birthday(),
+                parameters.email(),
+                parameters.phoneNumber(),
+                encodedPassword);
         return this.userRepository.save(user);
     }
 
@@ -80,13 +75,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User editUser(UserId userId, EditUserParameters parameters) {
         User user = userRepository.findById(userId)
-            .orElseThrow(() -> new UserNotFoundException(userId));
+                .orElseThrow(() -> new UserNotFoundException(userId));
 
         if (parameters.version() != user.getVersion()) {
             throw new ObjectOptimisticLockingFailureException(
-                User.class,
-                user.getId().toString()
-            );
+                    User.class,
+                    user.getId().toString());
         }
 
         parameters.update(user);
@@ -96,7 +90,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(UserId userId) {
         return this.userRepository.findById(userId)
-            .orElseThrow(() -> new UserNotFoundException(userId));
+                .orElseThrow(() -> new UserNotFoundException(userId));
     }
 
     @Override
