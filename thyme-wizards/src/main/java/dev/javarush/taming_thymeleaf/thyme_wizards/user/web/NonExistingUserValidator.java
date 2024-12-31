@@ -1,11 +1,9 @@
 package dev.javarush.taming_thymeleaf.thyme_wizards.user.web;
 
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.Email;
-import dev.javarush.taming_thymeleaf.thyme_wizards.user.UserId;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.UserService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.thymeleaf.util.StringUtils;
 
 public class NonExistingUserValidator
     implements ConstraintValidator<NonExistingUser, CreateUserFormData> {

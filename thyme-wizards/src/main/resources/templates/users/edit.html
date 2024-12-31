@@ -106,21 +106,23 @@
                                 </select>
                             </div>
 
-                            <div th:replace="~{ fragments/forms :: text-input(
-                                labelText = #{user.password.input.label},
-                                fieldName = 'password',
-                                cssClass = 'sm:col-span-4',
-                                inputType = 'password',
-                                placeholder = #{user.password.input.placeholder}
-                            ) }"></div>
+                            <th:block th:if="${editMode?.name() == 'CREATE'}">
+                                <div th:replace="~{ fragments/forms :: text-input(
+                                    labelText = #{user.password.input.label},
+                                    fieldName = 'password',
+                                    cssClass = 'sm:col-span-4',
+                                    inputType = 'password',
+                                    placeholder = #{user.password.input.placeholder}
+                                ) }"></div>
 
-                            <div th:replace="~{ fragments/forms :: text-input(
-                                labelText = #{user.password-repeated.input.label},
-                                fieldName = 'passwordRepeated',
-                                cssClass = 'sm:col-span-4',
-                                inputType = 'password',
-                                placeholder = #{user.password-repeated.input.placeholder}
-                            ) }"></div>
+                                <div th:replace="~{ fragments/forms :: text-input(
+                                    labelText = #{user.password-repeated.input.label},
+                                    fieldName = 'passwordRepeated',
+                                    cssClass = 'sm:col-span-4',
+                                    inputType = 'password',
+                                    placeholder = #{user.password-repeated.input.placeholder}
+                                ) }"></div>
+                            </th:block>
                         </div>
                     </div>
 

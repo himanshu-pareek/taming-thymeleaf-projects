@@ -8,7 +8,7 @@ import dev.javarush.taming_thymeleaf.thyme_wizards.user.User;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.Username;
 
 @HasOwnEmail(groups = ValidationGroupThree.class)
-public class EditUserFormData extends CreateUserFormData{
+public class EditUserFormData extends UserFormData {
   private String id;
   private long version;
 
@@ -32,8 +32,7 @@ public class EditUserFormData extends CreateUserFormData{
         getBirthday(),
         new Email(getEmail()),
         new PhoneNumber(getPhoneNumber()),
-        version
-    );
+        version);
   }
 
   public void setId(String id) {
