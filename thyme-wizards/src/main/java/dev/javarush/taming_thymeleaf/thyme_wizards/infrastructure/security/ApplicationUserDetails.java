@@ -3,7 +3,6 @@ package dev.javarush.taming_thymeleaf.thyme_wizards.infrastructure.security;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.User;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.UserId;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;

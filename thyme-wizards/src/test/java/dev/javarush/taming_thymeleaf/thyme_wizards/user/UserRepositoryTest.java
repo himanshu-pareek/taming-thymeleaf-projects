@@ -100,7 +100,7 @@ class UserRepositoryTest {
                             new Username(i % 2 == 0 ? "John" : "Jane", "Doe" + i),
                             i % 2 == 0 ? Gender.MALE : Gender.FEMALE,
                             LocalDate.of(1990, 1, 1),
-                            new Email((i % 2 == 0 ? "john" : "jane") + ".doe@fakeemail.com"),
+                            new Email((i % 2 == 0 ? "john" : "jane") + i + ".doe@fakeemail.com"),
                             new PhoneNumber("9876543210"),
                             Set.of(UserRole.USER, UserRole.ADMIN),
                             "password" + i));
