@@ -16,7 +16,8 @@
         title = #{users.title},
         buttonIcon = 'user-add',
         buttonText = #{user.create},
-        buttonLink = @{/users/create}
+        buttonLink = @{/users/create},
+        buttonId = 'create-user-button'
     ) }"
         sec:authorize="hasRole('ADMIN')"
       ></div>

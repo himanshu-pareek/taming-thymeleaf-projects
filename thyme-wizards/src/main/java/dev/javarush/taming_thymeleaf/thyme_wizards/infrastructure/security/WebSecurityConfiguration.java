@@ -50,10 +50,15 @@ public class WebSecurityConfiguration {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http.csrf(
+        httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer
+            .ignoringRequestMatchers("/api/integration-test/**")
+    );
     http.authorizeHttpRequests(
         authz -> authz.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
             .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
             .requestMatchers("/svg/*").permitAll()
+            .requestMatchers("/api/integration-test/**").permitAll()
             .anyRequest().authenticated())
         .formLogin(
             formLogin -> formLogin.loginPage("/login")

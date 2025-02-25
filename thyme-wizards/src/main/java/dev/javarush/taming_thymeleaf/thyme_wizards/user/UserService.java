@@ -20,4 +20,6 @@ public interface UserService {
   Optional<User> getUserUsingEmail(String email);
 
   void deleteUser(UserId userId);
+
+  void deleteAllUsers();
 }

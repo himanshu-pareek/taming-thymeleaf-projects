@@ -102,4 +102,9 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(UserId userId) {
         this.userRepository.deleteById(userId);
     }
+
+    @Override
+    public void deleteAllUsers() {
+        this.userRepository.deleteAll();
+    }
 }
