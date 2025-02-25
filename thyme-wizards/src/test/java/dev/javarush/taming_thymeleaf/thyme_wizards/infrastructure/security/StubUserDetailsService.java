@@ -20,7 +20,7 @@ import dev.javarush.taming_thymeleaf.thyme_wizards.user.Username;
 
 public class StubUserDetailsService implements UserDetailsService {
     public static final String USERNAME_USER = "john.doe@javarush.dev";
-    private static final String USERNAME_ADMIN = "jane.doe@javarush.dev";
+    public static final String USERNAME_ADMIN = "jane.doe@javarush.dev";
 
     private final Map<String, ApplicationUserDetails> users;
 

@@ -5,7 +5,7 @@
     layout:decorate="~{ layout/layout }"
     th:with="activeMenuItem = 'users'">
 <head>
-    <title>Users</title>
+    <title>Add user</title>
 </head>
 <body>
 <div layout:fragment="page-content">
@@ -138,6 +138,7 @@
 
                             <span class="ml-3 inline-flex rounded-md shadow-sm">
                                 <button type="submit"
+                                        id="submit-button"
                                     class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                                     th:text="${editMode?.name() == 'UPDATE'} ? #{action.save} : #{action.create}">
                                     SAVE
