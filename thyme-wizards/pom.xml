@@ -33,6 +33,7 @@
         <frontend-maven-plugin.npmVersion>10.8.1</frontend-maven-plugin.npmVersion>
         <java-faker.version>1.0.2</java-faker.version>
         <guava.version>33.3.1-jre</guava.version>
+        <testcontainers-cypress.version>1.9.1</testcontainers-cypress.version>
     </properties>
 	<dependencies>
 		<dependency>
@@ -72,6 +73,12 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.github.wimdeblauwe</groupId>
+            <artifactId>testcontainers-cypress</artifactId>
+            <version>${testcontainers-cypress.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -143,6 +150,15 @@
                 </excludes>
             </resource>
         </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+            <testResource>
+                <directory>src/test/e2e</directory>
+                <targetPath>e2e</targetPath>
+            </testResource>
+        </testResources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

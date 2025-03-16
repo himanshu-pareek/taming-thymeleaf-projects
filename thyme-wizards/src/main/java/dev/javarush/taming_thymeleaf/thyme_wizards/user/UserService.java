@@ -22,4 +22,6 @@ public interface UserService {
   void deleteUser(UserId userId);
 
   void deleteAllUsers();
+
+    long countUsers();
 }
