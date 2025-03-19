@@ -30,14 +30,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("users")
 public class UserController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
-    private static final List<Gender> GENDERS = List.of(
-            Gender.MALE,
-            Gender.FEMALE,
-            Gender.OTHER);
-    private static final List<UserRole> ROLES = List.of(UserRole.values());
-
-    private final UserService userService;
+  private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -58,9 +51,7 @@ public class UserController {
     @Secured("ROLE_ADMIN")
     public String createUserForm(Model model) {
         model.addAttribute("user", new CreateUserFormData());
-        model.addAttribute("genders", GENDERS);
         model.addAttribute("editMode", EditMode.CREATE);
-        model.addAttribute("possibleRoles", ROLES);
         return "users/edit";
     }
 
@@ -71,8 +62,6 @@ public class UserController {
             BindingResult bindingResult,
             Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("genders", GENDERS);
-            model.addAttribute("possibleRoles", ROLES);
             return "users/edit";
         }
 
@@ -85,9 +74,7 @@ public class UserController {
     public String editUserForm(@PathVariable("id") UserId userId, Model model) {
         User user = userService.getUser(userId);
         model.addAttribute("user", EditUserFormData.fromUser(user));
-        model.addAttribute("genders", GENDERS);
         model.addAttribute("editMode", EditMode.UPDATE);
-        model.addAttribute("possibleRoles", ROLES);
         return "users/edit";
     }
 
@@ -99,9 +86,7 @@ public class UserController {
             BindingResult bindingResult,
             Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("genders", GENDERS);
             model.addAttribute("editMode", EditMode.UPDATE);
-            model.addAttribute("possibleRoles", ROLES);
             return "users/edit";
         }
         userService.editUser(userId, formData.toEditUserParameters());
@@ -122,5 +107,15 @@ public class UserController {
         userService.deleteUser(userId);
         redirectAttributes.addFlashAttribute("deletedUserName", user.getUsername().getFullName());
         return "redirect:/users";
+    }
+
+    @ModelAttribute("genders")
+    public List<Gender> genders() {
+        return List.of(Gender.MALE, Gender.FEMALE, Gender.OTHER);
+    }
+
+    @ModelAttribute("possibleRoles")
+    public List<UserRole> possibleRoles() {
+        return List.of(UserRole.values());
     }
 }

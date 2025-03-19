@@ -2,12 +2,15 @@ package dev.javarush.taming_thymeleaf.thyme_wizards.configuration;
 
 import dev.javarush.taming_thymeleaf.thyme_wizards.db.InMemoryUniqueIdGenerator;
 import dev.javarush.taming_thymeleaf.thyme_wizards.db.UniqueIdGenerator;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
@@ -41,5 +44,11 @@ public class WebConfiguration {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+    
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        StringTrimmerEditor trimmerEditor = new StringTrimmerEditor(false);
+        binder.registerCustomEditor(String.class, trimmerEditor);
     }
 }
