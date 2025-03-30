@@ -62,6 +62,7 @@ public class UserController {
             BindingResult bindingResult,
             Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("editMode", EditMode.CREATE);
             return "users/edit";
         }
 

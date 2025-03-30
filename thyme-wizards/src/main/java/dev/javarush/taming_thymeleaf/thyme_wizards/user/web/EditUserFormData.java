@@ -6,11 +6,13 @@ import dev.javarush.taming_thymeleaf.thyme_wizards.user.Email;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.PhoneNumber;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.User;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.Username;
+import java.util.Base64;
 
 @HasOwnEmail(groups = ValidationGroupThree.class)
 public class EditUserFormData extends UserFormData {
   private String id;
   private long version;
+  private String avatarBase64Encoded;
 
   public static EditUserFormData fromUser(User user) {
     var formData = new EditUserFormData();
@@ -22,6 +24,11 @@ public class EditUserFormData extends UserFormData {
     formData.setBirthday(user.getBirthday());
     formData.setGender(user.getGender());
     formData.setPhoneNumber(user.getPhoneNumber().asString());
+
+    if (user.getAvatar() != null) {
+      String encoded = Base64.getEncoder().encodeToString(user.getAvatar());
+        formData.setAvatarBase64Encoded(encoded);
+    }
     return formData;
   }
 
@@ -32,6 +39,7 @@ public class EditUserFormData extends UserFormData {
         getBirthday(),
         new Email(getEmail()),
         new PhoneNumber(getPhoneNumber()),
+        getAvatarFile(),
         version);
   }
 
@@ -49,5 +57,13 @@ public class EditUserFormData extends UserFormData {
 
   public long getVersion() {
     return version;
+  }
+
+  public String getAvatarBase64Encoded() {
+    return avatarBase64Encoded;
+  }
+
+  public void setAvatarBase64Encoded(String avatarBase64Encoded) {
+    this.avatarBase64Encoded = avatarBase64Encoded;
   }
 }

@@ -39,6 +39,8 @@ public class User {
     @NotNull
     private String password;
 
+    private byte[] avatar;
+
     @Version
     private long version;
 
@@ -168,6 +170,14 @@ public class User {
 
     public void setVersion(long version) {
         this.version = version;
+    }
+
+    public byte[] getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(byte[] avatar) {
+        this.avatar = avatar;
     }
 
     @Override

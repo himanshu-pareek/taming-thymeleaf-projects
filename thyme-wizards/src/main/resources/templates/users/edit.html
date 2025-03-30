@@ -19,10 +19,34 @@
                 <form id="user-form"
                     th:object="${user}"
                     th:action="${ editMode?.name() == 'UPDATE' } ? @{/users/{id}/edit(id=${user.getId()})} : @{/users/create}"
-                    method="post">
+                    method="post"
+                enctype="multipart/form-data">
 
                     <div>
                         <div th:replace="~{ fragments/forms :: field-errors-summary }"></div>
+                        <div class="sm:col-span-6 flex flex-col items-center sm:flex-row sm:justify-start">
+                            <img id="avatarImage"
+                                 th:src="${editMode?.name() == 'UPDATE' &&
+                                    user.avatarBase64Encoded != null} ?
+                                    'data:image/jpeg;base64,' + ${user.avatarBase64Encoded}
+                                    : '/svg/user-add.svg'"
+                                 class="inline-block object-cover w-32 h-32 rounded-full overflow-hidden bg-gray-100 cursor-pointer"
+                                 th:classappend="${editMode?.name() == 'UPDATE' &&
+                                    user.avatarBase64Encoded != null} ? '' : 'p-6'"
+                                 />
+                            <input type="file"
+                                   id="avatarFile"
+                                   name="avatarFile"
+                                   class="hidden"
+                                   accept="image/*">
+
+                            <button id="selectAvatarButton"
+                                    type="button"
+                                    class="mt-4 sm:mt-0 ml-4 inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                    th:text="#{user.avatar.add}">
+                                SELECT PICTURE
+                            </button>
+                        </div>
                         <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                             <input th:if="${editMode?.name() == 'UPDATE'}"
                                    th:field="*{version}"
@@ -151,5 +175,30 @@
         </div>
     </div>
 </div>
+<th:block layout:fragment="page-scripts">
+    <script>
+        document.querySelector("#selectAvatarButton").addEventListener("click", evt => {
+            document.querySelector("#selectAvatarButton").blur();
+            document.querySelector("#avatarFile").click();
+        });
+
+        document.querySelector("#avatarImage").addEventListener("click", evt => {
+            document.querySelector("#avatarImage").blur();
+            document.querySelector("#avatarFile").click();
+        });
+
+        document.querySelector("#avatarFile").addEventListener("change", evt => {
+            previewImage();
+        });
+
+        function previewImage() {
+            const uploader = document.querySelector("#avatarFile");
+            if (uploader.files && uploader.files[0]) {
+                document.querySelector("#avatarImage").src = window.URL.createObjectURL(uploader.files[0]);
+                document.querySelector("#avatarImage").classList.remove("p-6");
+            }
+        }
+    </script>
+</th:block>
 </body>
 </html>

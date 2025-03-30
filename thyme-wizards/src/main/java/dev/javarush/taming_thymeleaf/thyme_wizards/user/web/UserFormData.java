@@ -12,6 +12,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import org.springframework.web.multipart.MultipartFile;
 
 public abstract class UserFormData {
     @NotBlank
@@ -33,6 +34,8 @@ public abstract class UserFormData {
     private String phoneNumber;
     @NotNull
     private UserRole role;
+
+    private MultipartFile avatarFile;
 
     public String getFirstName() {
         return firstName;
@@ -88,5 +91,13 @@ public abstract class UserFormData {
 
     public void setRole(UserRole role) {
         this.role = role;
+    }
+
+    public MultipartFile getAvatarFile() {
+        return avatarFile;
+    }
+
+    public void setAvatarFile(MultipartFile avatarFile) {
+        this.avatarFile = avatarFile;
     }
 }

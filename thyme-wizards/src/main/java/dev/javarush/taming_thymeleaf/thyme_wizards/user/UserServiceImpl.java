@@ -1,5 +1,6 @@
 package dev.javarush.taming_thymeleaf.thyme_wizards.user;
 
+import java.io.IOException;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Transactional
@@ -40,7 +42,19 @@ public class UserServiceImpl implements UserService {
                 parameters.email(),
                 parameters.phoneNumber(),
                 encodedPassword);
+        storeAvatarIfPresent(parameters, user);
         return this.userRepository.save(user);
+    }
+
+    private void storeAvatarIfPresent(CreateUserParameters parameters, User user) {
+        MultipartFile avatar = parameters.avatar();
+        if (avatar != null && !avatar.isEmpty()) {
+          try {
+            user.setAvatar(avatar.getBytes());
+          } catch (IOException e) {
+            throw new RuntimeException(e);
+          }
+        }
     }
 
     @Override

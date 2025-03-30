@@ -40,6 +40,7 @@ public class CreateUserFormData extends UserFormData {
         getBirthday(),
         new Email(getEmail()),
         new PhoneNumber(getPhoneNumber()),
-        password);
+        password,
+        getAvatarFile());
   }
 }

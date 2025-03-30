@@ -60,7 +60,7 @@
     </label>
     <div class="mt-1 relative rounded-md shadow-sm">
         <input th:type="${inputType}"
-               id="${'id-' + fieldName}"
+               th:id="${'id-' + fieldName}"
                th:field="*{__${fieldName}__}"
                th:placeholder="${placeholder}"
                class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"
