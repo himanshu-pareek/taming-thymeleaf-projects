@@ -24,4 +24,6 @@ public interface UserService {
   void deleteAllUsers();
 
     long countUsers();
+
+  Iterable<UserNameAndId> getAllUsersNameAndId();
 }

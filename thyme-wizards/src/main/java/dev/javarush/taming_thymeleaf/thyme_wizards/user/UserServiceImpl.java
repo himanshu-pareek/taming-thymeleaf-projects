@@ -126,4 +126,9 @@ public class UserServiceImpl implements UserService {
     public long countUsers() {
         return this.userRepository.count();
     }
+
+    @Override
+    public Iterable<UserNameAndId> getAllUsersNameAndId() {
+        return userRepository.findAllUsersNameAndId();
+    }
 }
