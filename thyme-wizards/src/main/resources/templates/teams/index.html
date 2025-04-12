@@ -85,6 +85,7 @@
                             href="javascript:void(0)"
                             class="text-green-600 hover:text-green-900"
                             @click="$dispatch('open-delete-modal', { name, deleteUrl })"
+                            th:id="'delete-link-' + ${team.id.asString()}"
                           >
                             Delete
                           </a>
@@ -189,7 +190,7 @@
                       Delete user
                     </h3>
                     <div class="mt-2">
-                      <p class="text-sm text-gray-500">
+                      <p class="text-sm text-gray-500" id="delete-modal-message">
                         Are you sure you want to delete team
                         <span class="italic" x-text="getName()"></span>?
                       </p>
@@ -212,6 +213,7 @@
                     th:value="${_csrf.token}"
                   />
                   <button
+                          id="delete-modal-submit-button"
                     type="submit"
                     class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                   >
