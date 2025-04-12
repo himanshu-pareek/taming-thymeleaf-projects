@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -72,7 +73,7 @@ public class TeamController {
         return "teams/edit";
     }
 
-    @PostMapping("/{id}/edit")
+    @PostMapping("/{id}")
     @Secured("ROLE_ADMIN")
     public String doEditTeam(
         @PathVariable("id") TeamId id,
@@ -94,7 +95,7 @@ public class TeamController {
         return "redirect:/teams";
     }
 
-    @PostMapping("{id}/delete")
+    @DeleteMapping("{id}")
     @Secured("ROLE_ADMIN")
     public String doDeleteTeam(@PathVariable("id") TeamId id, RedirectAttributes redirectAttributes) {
       var team = teamService.getTeam(id)
