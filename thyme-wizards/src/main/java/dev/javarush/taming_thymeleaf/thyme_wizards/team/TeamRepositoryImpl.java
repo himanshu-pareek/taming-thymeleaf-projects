@@ -14,4 +14,9 @@ public class TeamRepositoryImpl implements TeamRepositoryCustom {
   public TeamId nextId() {
     return new TeamId(uniqueIdGenerator.getNextUniqueId());
   }
+
+  @Override
+  public TeamPlayerId nextPlayerId() {
+    return new TeamPlayerId(uniqueIdGenerator.getNextUniqueId());
+  }
 }

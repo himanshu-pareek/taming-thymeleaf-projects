@@ -1,6 +1,7 @@
 package dev.javarush.taming_thymeleaf.thyme_wizards.team.web;
 
 import dev.javarush.taming_thymeleaf.thyme_wizards.infrastructure.web.EditMode;
+import dev.javarush.taming_thymeleaf.thyme_wizards.team.PlayerPosition;
 import dev.javarush.taming_thymeleaf.thyme_wizards.team.TeamId;
 import dev.javarush.taming_thymeleaf.thyme_wizards.team.TeamNotFoundException;
 import dev.javarush.taming_thymeleaf.thyme_wizards.team.TeamService;
@@ -46,6 +47,7 @@ public class TeamController {
     model.addAttribute("editMode", EditMode.CREATE);
     model.addAttribute("team", new CreateTeamFormData());
     model.addAttribute("users", userService.getAllUsersNameAndId());
+    model.addAttribute("positions", PlayerPosition.values());
     return "teams/edit";
   }
 
@@ -70,6 +72,7 @@ public class TeamController {
         model.addAttribute("editMode", EditMode.UPDATE);
         model.addAttribute("team", EditTeamFormData.fromTeam(team));
         model.addAttribute("users", userService.getAllUsersNameAndId());
+        model.addAttribute("positions", PlayerPosition.values());
         return "teams/edit";
     }
 
