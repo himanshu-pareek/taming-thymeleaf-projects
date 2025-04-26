@@ -9,17 +9,19 @@ import dev.javarush.taming_thymeleaf.thyme_wizards.user.UserService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -132,5 +134,32 @@ public class TeamController {
         return players;
       }
     }
+
+  private static class RemoveUnusedTeamPlayersValidator implements Validator {
+
+    private final Validator validator;
+
+    private RemoveUnusedTeamPlayersValidator(Validator validator) {
+      this.validator = validator;
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+      return validator.supports(clazz);
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+      if (target instanceof CreateTeamFormData formData) {
+        formData.removeEmptyTeamPlayerForms();
+      }
+      validator.validate(target, errors);
+    }
+  }
+
+  @InitBinder
+  public void initBinder(WebDataBinder binder) {
+    binder.setValidator(new RemoveUnusedTeamPlayersValidator(binder.getValidator()));
+  }
 
 }

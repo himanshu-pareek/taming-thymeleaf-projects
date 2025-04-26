@@ -103,6 +103,13 @@
                 });
         }
 
+        function removeTeamPlayerForm(formIndex) {
+            const teamPlayerForm = document.getElementById(`teamplayer-form-section-${formIndex}`);
+            if (teamPlayerForm) {
+                teamPlayerForm.parentElement.removeChild(teamPlayerForm);
+            }
+        }
+
         function htmlToElement(html) {
             const template = document.createElement('template');
             template.innerHTML = html.trim();
