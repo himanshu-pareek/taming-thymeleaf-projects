@@ -8,10 +8,11 @@ import org.springframework.data.domain.Pageable;
 
 public interface TeamService {
   Page<TeamSummary> getTeams(Pageable pageable);
-  Team createTeam(String name, User coach);
-  Team createTeam(String name, UserId coachId);
+  Team createTeam(CreateTeamParameters parameters);
   Optional<Team> getTeam(TeamId id);
-  Team editTeam(TeamId id, String name, long version, UserId coachId);
+  Team editTeam(TeamId id, EditTeamParameters parameters);
   void deleteTeam(TeamId id);
   void deleteAllTeams();
+
+  Optional<Team> getTeamWithPlayers(TeamId id);
 }

@@ -1,5 +1,6 @@
 package dev.javarush.taming_thymeleaf.thyme_wizards.infrastructure.test;
 
+import dev.javarush.taming_thymeleaf.thyme_wizards.team.CreateTeamParameters;
 import dev.javarush.taming_thymeleaf.thyme_wizards.team.TeamService;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.CreateUserParameters;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.Email;
@@ -9,6 +10,7 @@ import dev.javarush.taming_thymeleaf.thyme_wizards.user.UserNameAndId;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.UserService;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.Username;
 import java.time.LocalDate;
+import java.util.Collections;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +40,8 @@ public class IntegrationTestController {
   @PostMapping("/add-test-team")
   public void addTestTeam() {
     UserNameAndId userNameAndId = userService.getAllUsersNameAndId().iterator().next();
-    teamService.createTeam("Test Team", userNameAndId.id());
+    teamService.createTeam(new CreateTeamParameters("Test team", userNameAndId.id(),
+        Collections.emptySet()));
   }
 
   private void addAdministrator() {

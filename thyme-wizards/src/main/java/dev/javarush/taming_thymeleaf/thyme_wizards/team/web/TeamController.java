@@ -60,14 +60,14 @@ public class TeamController {
           model.addAttribute("users", userService.getAllUsersNameAndId());
           return "teams/edit";
       }
-        teamService.createTeam(formData.getName(), formData.getCoachId());
-        return "redirect:/teams";
+      teamService.createTeam(formData.toParameters());
+      return "redirect:/teams";
     }
 
     @GetMapping("/{id}/edit")
     @Secured("ROLE_ADMIN")
     public String editTeamForm(@PathVariable("id") TeamId id, Model model) {
-        var team = teamService.getTeam(id)
+        var team = teamService.getTeamWithPlayers(id)
             .orElseThrow(() -> new TeamNotFoundException(id));
         model.addAttribute("editMode", EditMode.UPDATE);
         model.addAttribute("team", EditTeamFormData.fromTeam(team));
@@ -91,9 +91,7 @@ public class TeamController {
         }
         teamService.editTeam(
             id,
-            formData.getName(),
-            formData.getVersion(),
-            formData.getCoachId()
+            formData.toEditParameters()
         );
         return "redirect:/teams";
     }

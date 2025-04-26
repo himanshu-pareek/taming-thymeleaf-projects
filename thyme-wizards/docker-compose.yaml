@@ -3,7 +3,12 @@ services:
     image: "postgres:16-alpine"
     ports:
       - "5432:5432"
+    volumes:
+      - thyme_wizards_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: ${POSTGRES_DATABASE}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+volumes:
+    thyme_wizards_data:

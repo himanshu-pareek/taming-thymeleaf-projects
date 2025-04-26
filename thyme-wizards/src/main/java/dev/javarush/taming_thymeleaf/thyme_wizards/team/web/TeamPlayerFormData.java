@@ -2,6 +2,7 @@ package dev.javarush.taming_thymeleaf.thyme_wizards.team.web;
 
 import dev.javarush.taming_thymeleaf.thyme_wizards.team.PlayerPosition;
 import dev.javarush.taming_thymeleaf.thyme_wizards.team.TeamPlayer;
+import dev.javarush.taming_thymeleaf.thyme_wizards.team.TeamPlayerParameters;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.UserId;
 import jakarta.validation.constraints.NotNull;
 
@@ -32,5 +33,12 @@ public class TeamPlayerFormData {
     result.setPlayerId(player.getPlayer().getId());
     result.setPosition(player.getPosition());
     return result;
+  }
+
+  public TeamPlayerParameters toParameters() {
+    return new TeamPlayerParameters(
+        playerId,
+        position
+    );
   }
 }

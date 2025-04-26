@@ -2,6 +2,7 @@ package dev.javarush.taming_thymeleaf.thyme_wizards.team;
 
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.User;
 import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -20,7 +21,7 @@ public class TeamPlayer {
   @AttributeOverride(name = "id", column = @Column(name = "id"))
   private TeamPlayerId id;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
   @NotNull
   private Team team;
 
@@ -34,7 +35,7 @@ public class TeamPlayer {
 
   protected TeamPlayer() {}
 
-  private TeamPlayer(TeamPlayerId id, User player, PlayerPosition position) {
+  TeamPlayer(TeamPlayerId id, User player, PlayerPosition position) {
     this.id = id;
     this.player = player;
     this.position = position;

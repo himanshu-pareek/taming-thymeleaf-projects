@@ -2,14 +2,18 @@ package dev.javarush.taming_thymeleaf.thyme_wizards.team;
 
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.User;
 import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "Team")
 @Table(name = "teams")
@@ -24,6 +28,9 @@ public class Team {
 
   @ManyToOne(fetch = FetchType.LAZY)
   private User coach;
+
+  @OneToMany(mappedBy = "team", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+  List<TeamPlayer> players = new ArrayList<>();
 
   @Version
   private long version;
@@ -66,5 +73,18 @@ public class Team {
 
   public void setVersion(long version) {
     this.version = version;
+  }
+
+  public void addPlayer(TeamPlayer player) {
+    players.add(player);
+    player.setTeam(this);
+  }
+
+  public List<TeamPlayer> getPlayers() {
+    return players;
+  }
+
+  public void clearPlayers() {
+    players.clear();
   }
 }

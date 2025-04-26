@@ -1,7 +1,6 @@
 package dev.javarush.taming_thymeleaf.thyme_wizards.team;
 
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.User;
-import dev.javarush.taming_thymeleaf.thyme_wizards.user.UserId;
 import dev.javarush.taming_thymeleaf.thyme_wizards.user.UserService;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -30,15 +29,17 @@ public class TeamServiceImpl implements TeamService{
   }
 
   @Override
-  public Team createTeam(String name, User coach) {
-    log.info("Creating team {} with coach {} ({})", name, coach.getUsername().getFullName(), coach.getId());
-    return teamRepository.save(new Team(teamRepository.nextId(), name, coach));
-  }
-
-  @Override
-  public Team createTeam(String name, UserId coachId) {
-    User coach = userService.getUser(coachId);
-    return createTeam(name, coach);
+  public Team createTeam(CreateTeamParameters parameters) {
+    String teamName = parameters.name();
+    User coach = userService.getUser(parameters.coachId());
+    log.info("Creating team with name: {}, coach: {} ({})", teamName,
+        coach.getUsername().getFullName(), coach.getId());
+    Team team = new Team(teamRepository.nextId(), teamName, coach);
+    parameters.players().stream()
+        .map(player -> new TeamPlayer(teamRepository.nextPlayerId(),
+            userService.getUser(player.playerId()), player.position()))
+        .forEach(team::addPlayer);
+    return teamRepository.save(team);
   }
 
   @Override
@@ -47,13 +48,22 @@ public class TeamServiceImpl implements TeamService{
   }
 
   @Override
-  public Team editTeam(TeamId id, String name, long version, UserId coachId) {
+  public Team editTeam(TeamId id, EditTeamParameters parameters) {
     Team team = getTeam(id).orElseThrow(() -> new TeamNotFoundException(id));
-    if (team.getVersion() != version) {
+    if (team.getVersion() != parameters.version()) {
       throw new ObjectOptimisticLockingFailureException(Team.class, team.getId().asString());
     }
-    team.setName(name);
-    team.setCoach(userService.getUser(coachId));
+    team.setName(parameters.name());
+    team.setCoach(userService.getUser(parameters.coachId()));
+
+    team.clearPlayers();
+    parameters.players().stream()
+        .map(player -> new TeamPlayer(
+            teamRepository.nextPlayerId(),
+            userService.getUser(player.playerId()),
+            player.position()
+        ))
+        .forEach(team::addPlayer);
     return team;
   }
 
@@ -65,5 +75,10 @@ public class TeamServiceImpl implements TeamService{
   @Override
   public void deleteAllTeams() {
     teamRepository.deleteAll();
+  }
+
+  @Override
+  public Optional<Team> getTeamWithPlayers(TeamId id) {
+    return teamRepository.findTeamWithPlayers(id);
   }
 }
