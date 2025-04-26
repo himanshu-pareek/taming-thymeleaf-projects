@@ -40,13 +40,13 @@ describe('Team Management', () => {
         cy.get('#teams-table').find('tbody tr').should('have.length', 1);
 
         cy.get('[id^=delete-link-]').click();
-        cy.get('#delete-modal-message').contains('Are you sure you want to delete team Test Team?');
+        cy.get('#delete-modal-message').contains('Are you sure you want to delete team Test team?');
         cy.get('#delete-modal-submit-button').click();
 
         // There should be no team left after the delete
         cy.get('#teams-table').find('tbody tr').should('have.length', 0);
 
-        cy.get('#success-alert-message').contains('Team Test Team was deleted successfully.');
+        cy.get('#success-alert-message').contains('Team Test team was deleted successfully.');
 
         cy.reload();
         cy.get('#success-alert-message').should('not.exist');

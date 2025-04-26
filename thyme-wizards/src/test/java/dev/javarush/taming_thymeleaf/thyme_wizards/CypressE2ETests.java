@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ActiveProfiles("integration-test")
 public class CypressE2ETests {
     @Container
-    private static final PostgreSQLContainer postgresqlContainer = new PostgreSQLContainer("postgres:16-bullseye")
+    private static final PostgreSQLContainer postgresqlContainer = new PostgreSQLContainer("postgres:16-alpine")
             .withDatabaseName("thyme_db")
             .withUsername("test_dev")
             .withPassword("password");
